@@ -90,6 +90,7 @@ export default function CapacityLab({reading}:{reading:Reading[]}) {
   a.href=url;a.download='complyvault-capacity-model.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)
  }
  async function submit(event:FormEvent<HTMLFormElement>){
+  if(!captchaReady) return // Native POST lets the form provider handle its hosted verification.
   event.preventDefault()
   if(status==='sending'||contact.website||!contact.consent||!token||!captchaReady)return
   setStatus('sending')
@@ -172,17 +173,18 @@ export default function CapacityLab({reading}:{reading:Reading[]}) {
  <div className={styles.printOnly}><h2>Assumptions in this report</h2><pre style={{whiteSpace:'pre-wrap',fontSize:12}}>{JSON.stringify({scenario,...inputs,readiness:checks},null,2)}</pre></div>
  </article>
  <section className={styles.panel+' '+styles.noprint} id="discuss"><h2>Bring your model to a workflow conversation.</h2><p>Share your assumptions with ComplyVault to check integration fit, the workload baseline and pricing.</p>
- {status==='success'?<div className={styles.status} role="status">Your request and model were submitted successfully. You can still print or download your assessment above.</div>:captchaReady?<form className={styles.form} onSubmit={submit}>
- <label className={styles.field}><span>Your name</span><input type="text" autoComplete="name" required maxLength={100} value={contact.name} onChange={e=>setContact(p=>({...p,name:e.target.value}))}/></label>
- <label className={styles.field}><span>Business email</span><input type="email" autoComplete="email" required maxLength={254} value={contact.email} onChange={e=>setContact(p=>({...p,email:e.target.value}))}/></label>
- <label className={styles.field+' '+styles.full}><span>Company</span><input type="text" autoComplete="organization" required maxLength={150} value={contact.company} onChange={e=>setContact(p=>({...p,company:e.target.value}))}/></label>
- <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{display:'none'}} value={contact.website} onChange={e=>setContact(p=>({...p,website:e.target.value}))}/>
- <label className={styles.checkbox+' '+styles.full}><input type="checkbox" required checked={contact.consent} onChange={e=>setContact(p=>({...p,consent:e.target.checked}))}/><span>I agree to share this model and my contact details with ComplyVault for a discussion about this assessment. <Link href="/privacy">Privacy policy</Link>.</span></label>
- <div className={styles.full}><Turnstile ref={captcha} siteKey={key!} onSuccess={setToken} onExpire={()=>setToken(null)} onError={()=>{setToken(null);setStatus('error')}}/>
+ {status==='success'?<div className={styles.status} role="status">Your request and model were submitted successfully. You can still print or download your assessment above.</div>:<form className={styles.form} onSubmit={submit} action="https://formspree.io/f/xnjjoely" method="POST">
+ <label className={styles.field}><span>Your name</span><input name="firstName" type="text" autoComplete="name" required maxLength={100} value={contact.name} onChange={e=>setContact(p=>({...p,name:e.target.value}))}/></label>
+ <label className={styles.field}><span>Business email</span><input name="email" type="email" autoComplete="email" required maxLength={254} value={contact.email} onChange={e=>setContact(p=>({...p,email:e.target.value}))}/></label>
+ <label className={styles.field+' '+styles.full}><span>Company</span><input name="company" type="text" autoComplete="organization" required maxLength={150} value={contact.company} onChange={e=>setContact(p=>({...p,company:e.target.value}))}/></label>
+ <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{display:'none'}} value={contact.website} onChange={e=>setContact(p=>({...p,website:e.target.value}))}/>
+ <label className={styles.checkbox+' '+styles.full}><input type="checkbox" name="consent" value="Please contact me about my assessment" required checked={contact.consent} onChange={e=>setContact(p=>({...p,consent:e.target.checked}))}/><span>I agree to share this model and my contact details with ComplyVault for a discussion about this assessment. <Link href="/privacy">Privacy policy</Link>.</span></label>
+ <input type="hidden" name="_subject" value="ComplyVault capacity model discussion"/><input type="hidden" name="message" value={JSON.stringify({modelVersion:'1.0.0',scenario,assumptions:inputs,priceIncluded:priceKnown,readiness:checks,result})}/>
+ <div className={styles.full}>{captchaReady&&<Turnstile ref={captcha} siteKey={key!} onSuccess={setToken} onExpire={()=>setToken(null)} onError={()=>{setToken(null);setStatus('error')}}/>}
  {status==='error'&&<p role="alert" className={styles.error}>We could not submit this request. Please retry the verification, or <Link href="/contact">contact us directly</Link>. Your calculator inputs are still available.</p>}
- <button type="submit" className={styles.btn} disabled={status==='sending'||!token||!contact.consent}>{status==='sending'?'Submitting…':'Discuss my model'}</button></div>
- </form>:<Link href="/contact" className={styles.btn}>Contact ComplyVault</Link>}
- <p className={styles.small} style={{marginTop:16}}>No email is needed to use or export this calculator. Contact details and the model are sent only when you submit this form. No automated report email or newsletter subscription is created.</p>
+ <button type="submit" className={styles.btn} disabled={status==='sending'||(captchaReady&&!token)||!contact.consent}>{status==='sending'?'Submitting…':'Discuss my model'}</button></div>
+ </form>}
+ <p className={styles.small} style={{marginTop:16}}>No email is needed to use or export this calculator. Contact details and the model are sent only when you submit this form. No automated report email or newsletter subscription is created. After submission, you may be taken to a confirmation or verification page.</p>
  </section>
  {reading.length>0&&<section className={styles.noprint}><h2>Go deeper into the evidence.</h2><div className={styles.reading}>{reading.map(post=><Link key={post.slug} href={'/blog/'+post.slug} className={styles.card}>{post.image&&/* eslint-disable-next-line @next/next/no-img-element */<img src={post.image} alt={post.alt} loading="lazy" width="900" height="506"/>}<div><h3>{post.title}</h3><p>{post.excerpt}</p><span>Read field note →</span></div></Link>)}</div></section>}
  <footer className={styles.footer}><span>ComplyVault · Operational planning model, version 1.0</span><Link href="/privacy">Privacy</Link></footer>
