@@ -20,7 +20,7 @@ function Field({label,hint,value,onChange,max=100000,step=1,range=false}:{label:
  const id=useId()
  return <label className={styles.field} htmlFor={id}><span>{label}{range&&<b>{value}%</b>}</span>
   <input id={id} type={range?'range':'number'} min={0} max={max} step={step} value={value} onChange={e=>onChange(Math.min(max,Math.max(0,Number(e.target.value)||0)))}/>
-  {hint&&<small>{hint}</small>
+  {hint&&<small>{hint}</small>}
  </label>
 }
 function WorkflowChart({result}:{result:Result}) {
