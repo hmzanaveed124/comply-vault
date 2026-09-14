@@ -51,6 +51,7 @@ export function Footer() {
     resources: {
       title: 'Resources',
       links: [
+        { label: 'Blog', href: '/blog' },
         { label: 'FAQ', href: isUK ? '/uk#faq' : '/#faq' },
         { label: 'Book a Demo', href: isUK ? '/uk#cta' : '/#cta' },
       ],

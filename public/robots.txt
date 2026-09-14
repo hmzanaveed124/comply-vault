@@ -8,6 +8,7 @@ Allow: /llms.txt
 Disallow: /api/
 Disallow: /dashboard/
 Disallow: /admin/
+Disallow: /studio/
 # Block other Next.js internal paths (but allow static assets above)
 Disallow: /_next/
 

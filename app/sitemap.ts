@@ -1,8 +1,30 @@
 import { MetadataRoute } from 'next'
+import { getAllPosts } from '@/src/sanity/fetch'
 import { SITE_URL } from '@/lib/site'
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+    let blogPosts: MetadataRoute.Sitemap = []
+
+    try {
+        const posts = await getAllPosts()
+        blogPosts = posts.map((post) => ({
+            url: `${SITE_URL}/blog/${post.slug}`,
+            lastModified: new Date(post.updatedAt || post.publishedAt),
+            changeFrequency: 'monthly' as const,
+            priority: 0.7,
+        }))
+    } catch (error) {
+        console.error('[sitemap] Failed to load Sanity posts:', error)
+    }
+
     return [
+        {
+            url: `${SITE_URL}/blog`,
+            lastModified: blogPosts[0]?.lastModified ?? new Date('2026-06-10'),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        ...blogPosts,
         {
             url: SITE_URL,
             lastModified: new Date('2026-01-22'),

@@ -1,0 +1,7 @@
+{"_id":"category-sec-enforcement","_type":"category","title":"SEC Enforcement","slug":{"_type":"slug","current":"sec-enforcement"},"description":"Enforcement actions, settlements, and lessons for RIAs."}
+{"_id":"category-examination-readiness","_type":"category","title":"Examination Readiness","slug":{"_type":"slug","current":"examination-readiness"},"description":"Preparing evidence and processes before an exam."}
+{"_id":"category-ria-compliance","_type":"category","title":"RIA Compliance","slug":{"_type":"slug","current":"ria-compliance"},"description":"Day-to-day compliance operations for registered investment advisers."}
+{"_id":"category-books-records","_type":"category","title":"Books & Records","slug":{"_type":"slug","current":"books-and-records"},"description":"Rule 204-2 and related recordkeeping obligations."}
+{"_id":"category-supervision","_type":"category","title":"Supervision","slug":{"_type":"slug","current":"supervision"},"description":"Supervisory systems, review workflows, and accountability."}
+{"_id":"category-regulatory-updates","_type":"category","title":"Regulatory Updates","slug":{"_type":"slug","current":"regulatory-updates"},"description":"Material regulatory developments affecting advisers."}
+{"_id":"category-complyvault-research","_type":"category","title":"ComplyVault Research","slug":{"_type":"slug","current":"complyvault-research"},"description":"Original analysis from the ComplyVault team."}

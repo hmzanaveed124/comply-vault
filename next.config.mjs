@@ -1,8 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['images.unsplash.com'],
+    domains: ['images.unsplash.com', 'cdn.sanity.io'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+        pathname: '/images/**',
+      },
+    ],
   },
+  compiler: {
+    styledComponents: true,
+  },
+  transpilePackages: ['next-sanity'],
   async headers() {
     return [
       {

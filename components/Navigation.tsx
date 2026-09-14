@@ -10,20 +10,22 @@ import { Menu, X } from 'lucide-react'
 import { ThemeToggle } from './ThemeToggle'
 import { DemoModal } from './DemoModal'
 
-export function Navigation() {
+export function Navigation(): React.ReactElement {
   const pathname = usePathname()
   const isUK = pathname?.startsWith('/uk') ?? false
   const isHomepage = pathname === '/' || pathname === '/uk'
   
   // For anchor links, if not on homepage, link to homepage with anchor
-  const getAnchorLink = (anchor: string) => {
+  const getAnchorLink = (anchor: string): string => {
     if (isHomepage) return anchor
-    return isUK ? `/uk${anchor}` : anchor
+    if (isUK) return '/uk' + anchor
+    return '/' + anchor
   }
   
   const navLinks = [
     { label: 'Solutions', href: isUK ? '/uk/fca-compliance-software' : '/ria-compliance-software' },
     { label: 'Features', href: '/features' },
+    { label: 'Blog', href: '/blog' },
     { label: 'How It Works', href: getAnchorLink('#how-it-works') },
     { label: 'Security', href: getAnchorLink('#security') },
     { label: 'Pricing', href: isUK ? '/uk/pricing' : '/pricing' },
@@ -86,20 +88,32 @@ export function Navigation() {
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => {
-                const isAnchor = link.href.startsWith('#')
-                const Component = isAnchor ? 'a' : Link
-                const props = isAnchor 
-                  ? { href: link.href }
-                  : { href: link.href as string }
-                
+                const isHashLink = link.href.includes('#')
+                const Component = isHashLink ? 'a' : Link
+
+                const isActive =
+                  !isHashLink &&
+                  (pathname === link.href ||
+                    (link.href === '/blog' && Boolean(pathname?.startsWith('/blog'))))
+
                 return (
                   <Component
                     key={link.label}
-                    {...props}
-                    className="text-muted-foreground hover:text-primary font-medium transition-colors relative group"
+                    href={link.href}
+                    className={cn(
+                      'font-medium transition-colors relative group',
+                      isActive
+                        ? 'text-primary'
+                        : 'text-muted-foreground hover:text-primary'
+                    )}
                   >
                     {link.label}
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+                    <span
+                      className={cn(
+                        'absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300',
+                        isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                      )}
+                    />
                   </Component>
                 )
               })}
@@ -137,16 +151,13 @@ export function Navigation() {
           >
             <div className="bg-card rounded-2xl shadow-xl shadow-foreground/5 p-4 space-y-4 border border-border">
               {navLinks.map((link) => {
-                const isAnchor = link.href.startsWith('#')
-                const Component = isAnchor ? 'a' : Link
-                const props = isAnchor 
-                  ? { href: link.href }
-                  : { href: link.href as string }
-                
+                const isHashLink = link.href.includes('#')
+                const Component = isHashLink ? 'a' : Link
+
                 return (
                   <Component
                     key={link.label}
-                    {...props}
+                    href={link.href}
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="block py-2 text-muted-foreground hover:text-primary font-medium transition-colors"
                   >

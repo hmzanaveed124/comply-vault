@@ -1,0 +1,26 @@
+{
+  "name": "complyvault-studio",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Standalone Sanity Studio for ComplyVault Insights",
+  "scripts": {
+    "dev": "sanity dev",
+    "start": "sanity dev",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "deploy-graphql": "sanity graphql deploy",
+    "seed:categories": "sanity dataset import seed/categories.ndjson production --missing",
+    "seed:first-article": "sanity dataset import seed/first-article.ndjson production --missing"
+  },
+  "dependencies": {
+    "@sanity/vision": "^3.99.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sanity": "^3.99.0",
+    "styled-components": "^6.1.18"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "typescript": "^5.6.3"
+  }
+}

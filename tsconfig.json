@@ -36,6 +36,7 @@
   ],
   "exclude": [
     "node_modules",
-    "ria-compliance-tool"
+    "ria-compliance-tool",
+    "studio/node_modules"
   ]
 }

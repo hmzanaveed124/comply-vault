@@ -11,6 +11,7 @@ const EXCLUDED_PATHS = [
     '/checkout',
     '/webhook',
     '/admin',
+    '/studio',
     '/_next',
     '/favicon.ico',
 ]
