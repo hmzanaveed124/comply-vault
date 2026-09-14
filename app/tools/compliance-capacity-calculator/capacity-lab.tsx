@@ -27,7 +27,7 @@ function WorkflowChart({result}:{result:Result}) {
  const id=useId().replace(/:/g,'')
  const max=Math.max(1,...result.rows.map(row=>row.annual))
  return <>
- <svg className={styles.chart} viewBox="0 0 680 290" role="img" aria-label="Annual baseline and released hours for each workflow. Exact values follow in the table.">
+ <div className={styles.chartViewport} tabIndex={0} role="region" aria-label="Scrollable chart"><svg className={styles.chart} viewBox="0 0 680 290" role="img" aria-label="Annual baseline and released hours for each workflow. Exact values follow in the table.">
  <defs><filter id={id} x="0" y="-20%" width="100%" height="140%"><feTurbulence type="fractalNoise" baseFrequency=".05 .6" numOctaves="2" seed="8" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/></filter></defs>
  {result.rows.map((row,i)=><g key={row.key}>
   <text x="0" y={22+i*65}>{row.label}</text>
@@ -36,7 +36,7 @@ function WorkflowChart({result}:{result:Result}) {
   <text x="670" y={47+i*65} textAnchor="end">{number(row.saved)} / {number(row.annual)}h</text>
  </g>)}
  <text x="0" y="286">0h</text><text x="540" y="286" textAnchor="end">{number(max)}h / year</text>
- </svg>
+ </svg></div>
  <p className={styles.small}>Green: hours potentially released at full adoption. Grey: current workload. First-year ramp and extra review effort are applied below.</p>
  </>
 }
@@ -51,7 +51,7 @@ function ValueChart({result,priceKnown}:{result:Result;priceKnown:boolean}) {
  const selected=result.months[month]
  return <>
  <div className={styles.legend}><span>{priceKnown?'Cumulative net capacity value':'Capacity value before subscription'}</span><span>{priceKnown?'Modelled cash balance':'Cash balance before subscription'}</span></div>
- <svg className={styles.chart} viewBox="0 0 650 270" role="img" aria-label="Cumulative capacity value and cash balance from implementation to month twelve. Use the month slider for exact values.">
+ <div className={styles.chartViewport} tabIndex={0} role="region" aria-label="Scrollable chart"><svg className={styles.chart} viewBox="0 0 650 270" role="img" aria-label="Cumulative capacity value and cash balance from implementation to month twelve. Use the month slider for exact values.">
  <defs><filter id={id} x="-5%" y="-10%" width="110%" height="120%"><feTurbulence baseFrequency=".02 .4" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2"/></filter></defs>
  {[0,.5,1].map(t=>{const v=low+span*t;return <g key={t}><line x1="70" x2="622" y1={y(v)} y2={y(v)} stroke="#dce5de"/><text x="62" y={y(v)+4} textAnchor="end">{Math.abs(v)>=1000?(v/1000).toFixed(1)+'k':number(v)}</text></g>})}
  <line x1="70" x2="622" y1={y(0)} y2={y(0)} stroke="#849b8b" strokeDasharray="4 5"/>
@@ -61,7 +61,7 @@ function ValueChart({result,priceKnown}:{result:Result;priceKnown:boolean}) {
  {[0,3,6,9,12].map(m=><text key={m} x={x(m)} y="255" textAnchor="middle">{m===0?'Setup':'M'+m}</text>)}
  <line x1={x(month)} x2={x(month)} y1="30" y2="230" stroke="#12372c" opacity=".3"/>
  {result.months.map(p=><circle key={p.month} cx={x(p.month)} cy={y(p.net)} r={month===p.month?6:4} fill="#117a4b" tabIndex={0} role="button" aria-label={'Month '+p.month+': '+currency(p.net)} onMouseEnter={()=>setMonth(p.month)} onFocus={()=>setMonth(p.month)} onClick={()=>setMonth(p.month)} onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();setMonth(p.month)}}}/>)}
- </svg>
+ </svg></div>
  <label className={styles.field}><span>Explore month {month}<b>{currency(selected.net)}</b></span><input type="range" min="0" max="12" value={month} onChange={e=>setMonth(Number(e.target.value))}/><small>USD · cash balance: {currency(selected.cash)}. Preparation effort is spread evenly over the year for planning.</small></label>
  </>
 }
