@@ -19,8 +19,8 @@ export function BlogCta({ variant = 'slab' }: BlogCtaProps): JSX.Element {
           <Button href="/#cta" variant="primary" size="sm" className="!bg-white !text-vault-green-700 hover:!bg-vault-green-50 !shadow-none">
             Book a Demo
           </Button>
-          <Button href="/sample-audit-pack" variant="outline" size="sm" className="!border-white/40 !text-white hover:!bg-white/10">
-            See Sample Audit Pack
+          <Button href="/tools/compliance-capacity-calculator" variant="outline" size="sm" className="!border-white/40 !text-white hover:!bg-white/10">
+            Model Your Compliance Capacity
           </Button>
         </div>
       </aside>
@@ -41,8 +41,8 @@ export function BlogCta({ variant = 'slab' }: BlogCtaProps): JSX.Element {
           <Button href="/#cta" variant="primary" size="md" className="!bg-white !text-vault-green-800 hover:!bg-vault-green-50 !shadow-none">
             Book a Demo
           </Button>
-          <Button href="/sample-audit-pack" variant="outline" size="md" className="!border-white/40 !text-white hover:!bg-white/10">
-            See Sample Audit Pack
+          <Button href="/tools/compliance-capacity-calculator" variant="outline" size="md" className="!border-white/40 !text-white hover:!bg-white/10">
+            Model Your Compliance Capacity
           </Button>
         </div>
       </div>
