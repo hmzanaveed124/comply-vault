@@ -1,5 +1,5 @@
 /**
- * Model v1.0.0. All defaults are illustrative, not measured ComplyVault outcomes.
+ * Model v1.1.0. All defaults are illustrative, not measured ComplyVault outcomes.
  * Recurring workload inputs are monthly; preparationHours is annual.
  */
 export const WORKFLOWS = [
@@ -12,7 +12,7 @@ export const DEFAULTS = {
  persona:'ria',registration:'sec',firms:1,scope:'portfolio',hourly:95,
  review:16,meetings:20,retrieval:6,preparation:24,
  reductionReview:35,reductionMeetings:50,reductionRetrieval:45,reductionPreparation:30,
- coverage:80,adoption:80,ramp:3,overhead:2,setupHours:8,
+ coverage:80,adoption:80,ramp:3,overhead:2,overheadScope:'firm',setupHours:8,
  monthlyPrice:0,setupFee:0,avoidableSpend:0,cashPercent:0,
  archiveSpend:100,firmHours:120,
 };
@@ -31,7 +31,9 @@ export function calculate(input = DEFAULTS, scenario = 'base') {
  });
  const grossHours=rows.reduce((a,r)=>a+r.saved,0);
  const baseline=rows.reduce((a,r)=>a+r.annual,0);
- const ramp=Math.floor(n('ramp',12)), overhead=n('overhead')*12;
+ const ramp=Math.floor(n('ramp',12));
+ const overheadMonthly=n('overhead')*(s.overheadScope==='firm'?firms:1);
+ const overhead=overheadMonthly*12;
  const subscription=n('monthlyPrice')*12, setup=n('setupFee')+n('setupHours')*rate;
  const avoided=n('avoidableSpend')*12, archive=n('archiveSpend')*12;
  let running=-setup, cash=-n('setupFee')-n('setupHours')*rate*n('cashPercent',100)/100;
@@ -46,10 +48,12 @@ export function calculate(input = DEFAULTS, scenario = 'base') {
    months.push({month,net:running,cash,hours});
  }
  const investment=subscription+setup+overhead*rate;
+ const priceIncluded=n('monthlyPrice')>0;
  // Sustained break-even: later months must not fall below zero again.
- const breakEven=investment===0 ? null : months.find((m,i)=>i>0 && m.net>=0 && months.slice(i).every(p=>p.net>=0))?.month ?? null;
+ const breakEven=!priceIncluded || investment===0 ? null : months.find((m,i)=>i>0 && m.net>=0 && months.slice(i).every(p=>p.net>=0))?.month ?? null;
  return {rows,firms,baseline,grossHours,released,net:running,cash,months,investment,
-  roi:investment>0?running/investment*100:null,breakEven,subscription,setup,archive,
+  roi:priceIncluded&&investment>0?running/investment*100:null,breakEven,subscription,setup,archive,
+  priceIncluded,valueBasis:priceIncluded?'net_capacity_value':'before_subscription',overheadMonthly,
   steadyHours:grossHours-overhead,
   capacity:n('firmHours')>0?Math.max(0,grossHours-overhead)/n('firmHours'):null,
   totalCurrentCost:baseline*rate+archive,

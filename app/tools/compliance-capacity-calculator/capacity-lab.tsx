@@ -1,15 +1,17 @@
 'use client'
 
-import { useId, useMemo, useRef, useState, type FormEvent } from 'react'
+import { useEffect, useId, useMemo, useRef, useState, type FormEvent } from 'react'
 import Link from 'next/link'
 import { Turnstile, type TurnstileInstance } from '@marsidev/react-turnstile'
 import { calculate, DEFAULTS, WORKFLOWS } from './model.mjs'
+import { createAssessment, restoreAssessment, readSavedModels, STORAGE_KEY, MAX_FILE_SIZE } from './saved-models.mjs'
 import styles from './capacity.module.css'
 
 type Inputs = typeof DEFAULTS
 type Reading = { title:string; slug:string; excerpt:string; image:string|null; alt:string }
 type Scenario = 'cautious'|'base'|'stretch'
 type Result = ReturnType<typeof calculate>
+type SavedModel = {id:string;name:string;savedAt:string;assessment:ReturnType<typeof createAssessment>}
 const currency = (value:number) => new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(value)
 const number = (value:number) => new Intl.NumberFormat('en-US',{maximumFractionDigits:0}).format(value)
 const scenarios: {key:Scenario;label:string}[] = [{key:'cautious',label:'Cautious'},{key:'base',label:'Working case'},{key:'stretch',label:'Stretch'}]
@@ -73,17 +75,64 @@ export default function CapacityLab({reading}:{reading:Reading[]}) {
  const [contact,setContact]=useState({name:'',email:'',company:'',consent:false,website:''})
  const [status,setStatus]=useState<'idle'|'sending'|'success'|'error'>('idle')
  const [token,setToken]=useState<string|null>(null)
+ const [savedModels,setSavedModels]=useState<SavedModel[]>([])
+ const [savedName,setSavedName]=useState('')
+ const [selectedModel,setSelectedModel]=useState('')
+ const [storageStatus,setStorageStatus]=useState('')
+ const [storageReady,setStorageReady]=useState(false)
+ useEffect(()=>{
+  try { setSavedModels(readSavedModels(localStorage.getItem(STORAGE_KEY)));setStorageReady(true) }
+  catch { setStorageStatus('Saved models could not be read in this browser. You can still download and import a model file.') }
+ },[])
  const captcha=useRef<TurnstileInstance>(null)
  const key=process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
  const captchaReady=Boolean(key && key!=='1x00000000000000000000AA')
  const result=useMemo(()=>calculate(inputs,scenario),[inputs,scenario])
  const allCases=useMemo(()=>scenarios.map(s=>({...s,result:calculate(inputs,s.key)})),[inputs])
- const priceKnown=inputs.monthlyPrice>0
+ const priceKnown=result.priceIncluded
  const multi=!['ria','internal'].includes(inputs.persona)
  const confirmed=checks.filter(c=>c==='yes').length
  const known=checks.filter(c=>c!=='unknown').length
  const set=<K extends keyof Inputs>(key:K,value:Inputs[K])=>setInputs(p=>({...p,[key]:value}))
- const snapshot=()=>({modelVersion:'1.0.0',date:new Date().toISOString(),scenario,assumptions:inputs,priceIncluded:priceKnown,readiness:checks,result,statement:'Illustrative planning model. Capacity value is not guaranteed cash savings. Existing archive retained.'})
+ const assessment=useMemo(()=>createAssessment(inputs,scenario,checks),[inputs,scenario,checks])
+ const snapshot=()=>({...assessment,date:new Date().toISOString()})
+ function saveModel(){
+  if(!savedName.trim()){setStorageStatus('Add a name for this conversation first.');return}
+  try {
+   const previous:SavedModel[]=readSavedModels(localStorage.getItem(STORAGE_KEY))
+   if(previous.length>=20){setStorageStatus('This browser holds 20 saved models. Delete an old model or download a file.');return}
+   const row:SavedModel={id:crypto.randomUUID(),name:savedName.trim(),savedAt:new Date().toISOString(),assessment}
+   const next=[row,...previous]
+   localStorage.setItem(STORAGE_KEY,JSON.stringify(next))
+   setSavedModels(next);setSelectedModel(row.id);setStorageStatus('Saved in this browser. Later edits require another save.')
+  }catch{setStorageStatus('Could not save in this browser. Your inputs are unchanged; use Download model instead.')}
+ }
+ function applyModel(value:unknown){
+  const restored=restoreAssessment(value)
+  setInputs(restored.assumptions);setScenario(restored.scenario as Scenario);setChecks(restored.readiness)
+ }
+ function openSaved(){
+  const row=savedModels.find(m=>m.id===selectedModel)
+  if(!row)return
+  try{applyModel(row.assessment);setSavedName(row.name);setStorageStatus('Saved assumptions restored. Results recalculated with model 1.1.')}
+  catch{setStorageStatus('This saved model could not be restored. Your current inputs have not changed.')}
+ }
+ function deleteSaved(){
+  try{
+   const next:SavedModel[]=readSavedModels(localStorage.getItem(STORAGE_KEY)).filter((m:SavedModel)=>m.id!==selectedModel)
+   localStorage.setItem(STORAGE_KEY,JSON.stringify(next));setSavedModels(next);setSelectedModel('')
+   setStorageStatus('Selected saved copy deleted. The model on screen is unchanged.')
+  }catch{setStorageStatus('Could not delete the saved copy.')}
+ }
+ async function importFile(file:File|undefined){
+  if(!file)return
+  if(file.size>MAX_FILE_SIZE){setStorageStatus('Choose a model JSON file smaller than 128 KB.');return}
+  try{
+   const raw=JSON.parse(await file.text())
+   applyModel(raw);setSelectedModel('')
+   setStorageStatus(raw.modelVersion==='1.0.0'?'Version 1.0 restored with its original portfolio-total oversight. Check that basis for multi-firm use; results were recalculated.':'Model imported and recalculated. Save it here to return to it in this browser.')
+  }catch{setStorageStatus('This file is not a valid supported model. Your current inputs have not changed.')}
+ }
  function download(){
   const blob=new Blob([JSON.stringify(snapshot(),null,2)],{type:'application/json'})
   const url=URL.createObjectURL(blob),a=document.createElement('a')
@@ -106,14 +155,15 @@ export default function CapacityLab({reading}:{reading:Reading[]}) {
   }catch{setStatus('error')}finally{setToken(null);captcha.current?.reset()}
  }
  return <main className={styles.lab}><div className={styles.wrap}>
- <nav className={styles.nav} aria-label="Main navigation"><Link className={styles.logo} href="/">ComplyVault<span style={{color:'#117a4b'}}> / </span>Capacity Lab</Link><div className={styles.navlinks}><Link href="/blog">Field notes</Link><a href="#methodology">Methodology</a></div></nav>
- <header className={styles.intro}><div className={styles.eyebrow}>An interactive field guide · Model 1.0</div><h1>What is the cost of<br/>reconstructing compliance?</h1><p className={styles.lead}>Move from scattered records to a working business case. Model the hours behind review, documentation and evidence preparation—then see what improving that process could release.</p></header>
+ <nav className={styles.nav} aria-label="Main navigation"><Link className={styles.logo} href="/">ComplyVault<span style={{color:'#117a4b'}}> / </span>Capacity Lab</Link><div className={styles.navlinks}><Link href="/blog">Field notes</Link><a href="#saved-models">Saved models</a><a href="#methodology">Methodology</a></div></nav>
+ <header className={styles.intro}><div className={styles.eyebrow}>An interactive field guide · Model 1.1</div><h1>How much review time<br/>could your team reclaim?</h1><p className={styles.lead}>Build a capacity case using the hours your team spends on review, documentation and evidence preparation. Bring your numbers to a partner conversation and test the assumptions together.</p></header>
  <div className={styles.workspace}>
  <aside className={styles.controls} aria-label="Model assumptions">
  <h2>Your operating reality</h2><p className={styles.small}>Start with illustrative inputs. Replace them with your own workload; all financial amounts are USD.</p>
  <label className={styles.field}><span>I work as</span><select value={inputs.persona} onChange={e=>set('persona',e.target.value)}><option value="ria">An RIA / advisory firm</option><option value="internal">An internal compliance team</option><option value="outsourced">An outsourced / fractional CCO</option><option value="platform">A multi-firm platform</option><option value="provider">A compliance technology provider</option><option value="other">Another compliance operator</option></select></label>
  <label className={styles.field}><span>Registration context</span><select value={inputs.registration} onChange={e=>set('registration',e.target.value)}><option value="sec">SEC registered</option><option value="state">State registered</option><option value="mixed">Mixed registrations</option><option value="other">Other / not applicable</option></select><small>Context only; no regulatory multiplier is applied.</small></label>
- {multi&&<><Field label="Firms supervised" value={inputs.firms} max={1000} onChange={v=>set('firms',Math.max(1,Math.floor(v)))}/><label className={styles.field}><span>Workload numbers below cover</span><select value={inputs.scope} onChange={e=>set('scope',e.target.value)}><option value="portfolio">My entire portfolio</option><option value="firm">One average firm</option></select><small>{inputs.scope==='firm'?'Workload is multiplied by '+result.firms+' firms.':'Workload is counted once across all firms.'} Prices, setup and overhead always cover the entire portfolio.</small></label></>}
+ {multi&&<><Field label="Firms supervised" value={inputs.firms} max={1000} onChange={v=>set('firms',Math.max(1,Math.floor(v)))}/><label className={styles.field}><span>Workload numbers below cover</span><select value={inputs.scope} onChange={e=>set('scope',e.target.value)}><option value="portfolio">My entire portfolio</option><option value="firm">One average firm</option></select><small>{inputs.scope==='firm'?'Workload is multiplied by '+result.firms+' firms.':'Workload is counted once across all firms.'} Prices and setup cover the entire portfolio. Oversight has its own scope below.</small></label></>}
+ {multi&&<p className={styles.insight}>Oversight: {number(result.overheadMonthly)} hours/month total across {result.firms} firms. Basis: {inputs.overheadScope==='firm'?'per firm':'portfolio total'}. Review this under section 02.</p>}
  <details open><summary>01 / Where the hours go</summary>
  {WORKFLOWS.map(w=><Field key={w.key} label={w.label+(w.key==='preparation'?' · hours/year':' · hours/month')} hint={w.description} value={Number(inputs[w.key as keyof Inputs])} onChange={v=>set(w.key as keyof Inputs,v)}/>)}
  <Field label="Fully loaded hourly cost" value={inputs.hourly} max={2000} onChange={v=>set('hourly',v)} hint="Salary, benefits and employer costs per hour. Use a blended rate for the people doing this work."/>
@@ -124,7 +174,9 @@ export default function CapacityLab({reading}:{reading:Reading[]}) {
  <Field range label="Workload with usable evidence" value={inputs.coverage} max={100} onChange={v=>set('coverage',v)} hint="Share supported by accessible, indexed evidence. Missing channels receive no assumed benefit."/>
  <Field range label="Adoption of the new workflow" value={inputs.adoption} max={100} onChange={v=>set('adoption',v)}/>
  <Field label="Months to reach full adoption" value={inputs.ramp} max={12} onChange={v=>set('ramp',v)}/>
- <Field label="Extra oversight · hours/month" value={inputs.overhead} onChange={v=>set('overhead',v)} hint="Additional checking and maintenance across the whole organisation."/>
+ <label className={styles.field}><span>Additional oversight is entered</span><select value={inputs.overheadScope} onChange={e=>set('overheadScope',e.target.value)}><option value="firm">Per firm</option><option value="portfolio">For the entire portfolio</option></select></label>
+ <Field label={'Extra oversight · hours/month'+(inputs.overheadScope==='firm'?' per firm':' total')} value={inputs.overhead} onChange={v=>set('overhead',v)} hint={'Total additional checking: '+number(result.overheadMonthly)+' hours/month across '+result.firms+' firm(s). Charged from month one.'}/>
+ {multi&&inputs.overheadScope==='portfolio'&&<p className={styles.insight}>You chose a fixed portfolio total. It will not increase when you add firms; include the checking effort for every firm.</p>}
  </details>
  <details><summary>03 / Costs and cash reality</summary>
  <Field label="ComplyVault quote · total/month" value={inputs.monthlyPrice} onChange={v=>set('monthlyPrice',v)} hint="Enter your actual quote. Zero means pricing has not been supplied; this is not a free plan."/>
@@ -141,12 +193,14 @@ export default function CapacityLab({reading}:{reading:Reading[]}) {
  <div className={styles.resultHero}>
  <div className={styles.eyebrow}>Your first-year capacity case</div>
  <div className={styles.scenario} role="group" aria-label="Efficiency scenario">{scenarios.map(s=><button key={s.key} aria-pressed={scenario===s.key} onClick={()=>setScenario(s.key)}>{s.label}</button>)}</div>
- <div className={styles.mainNumber}>{currency(result.net)}</div>
- <p>{priceKnown?'Estimated net capacity value in year one':'Estimated capacity value before subscription costs'}</p>
- <p className={styles.small}>{number(result.released)} hours after ramp-up, additional oversight and setup. {priceKnown?'Includes the quote you entered.':'Enter a quote under costs to calculate net value and payback.'} Staff time has economic value; it does not automatically reduce expenditure.</p>
+ <div className={styles.mainNumber}>{number(Math.abs(result.released))} hours</div>
+ <p>{result.released>=0?'Estimated team capacity released in year one':'Estimated additional team effort in year one'}</p>
+ <p className={styles.small}>After ramp-up, additional oversight and setup. This is staff time available for other work; cash savings depend on whether actual expenditure falls.</p>
+ <p className={styles.secondaryValue}>{currency(result.net)} <span>{priceKnown?'net capacity value at your quoted price':'capacity value before subscription costs'}</span></p>
+ {!priceKnown&&<p className={styles.small}>Enter a quote under costs to assess net value and payback.</p>}
  </div>
  <div className={styles.metrics}>
- <div className={styles.metric}><span>First-year hours released</span><strong>{number(result.released)}h</strong><span>after implementation effort</span></div>
+ <div className={styles.metric}><span>Current annual workload</span><strong>{number(result.baseline)}h</strong><span>before any workflow changes</span></div>
  <div className={styles.metric}><span>Modelled cash balance</span><strong>{priceKnown?currency(result.cash):'Quote needed'}</strong><span>{inputs.cashPercent}% labour cash realisation</span></div>
  <div className={styles.metric}><span>Capacity-value payback</span><strong>{!priceKnown?'Quote needed':result.breakEven?'Month '+result.breakEven:'Beyond year 1'}</strong><span>cash payback can differ</span></div>
  </div>
@@ -161,13 +215,22 @@ export default function CapacityLab({reading}:{reading:Reading[]}) {
  {checks.map((v,i)=>v!=='yes'?<p key={i} className={styles.insight}>{readinessActions[i]}</p>:null)}
  {confirmed===4&&<p className={styles.insight}>Next, time a repeatable examiner-style request and use it as the pilot baseline.</p>}
  </section>
- <section className={styles.panel}><h2>Keep the assumptions with the answer.</h2><p>Save this model for a team discussion. Your inputs and scenario travel with the result.</p><div className={styles.row+' '+styles.noprint}><button className={styles.btn} onClick={()=>window.print()}>Print / save PDF</button><button className={styles.btn+' '+styles.secondary} onClick={download}>Download model</button></div></section>
+ <section className={styles.panel} id="saved-models"><h2>Pick up the conversation next time.</h2>
+ <p>Name and save a model in this browser, or download a file to reopen on another device.</p>
+ <div className={styles.noprint}>
+ <label className={styles.field}><span>Conversation name</span><input type="text" maxLength={80} placeholder="For example: seven-firm pilot" value={savedName} onChange={e=>setSavedName(e.target.value)}/></label>
+ <div className={styles.saveActions}><button className={styles.btn} disabled={!storageReady} onClick={saveModel}>Save a new copy</button><button className={styles.btn+' '+styles.secondary} onClick={download}>Download model</button><button className={styles.btn+' '+styles.secondary} onClick={()=>window.print()}>Print / save PDF</button></div>
+ {savedModels.length>0&&<><label className={styles.field}><span>Saved in this browser</span><select value={selectedModel} onChange={e=>setSelectedModel(e.target.value)}><option value="">Choose a saved conversation</option>{savedModels.map(m=><option value={m.id} key={m.id}>{m.name} · {new Date(m.savedAt).toLocaleString()}</option>)}</select></label><div className={styles.saveActions}><button className={styles.btn} disabled={!selectedModel} onClick={openSaved}>Restore selected</button><button className={styles.btn+' '+styles.secondary} disabled={!selectedModel} onClick={deleteSaved}>Delete saved copy</button></div></>}
+ <label className={styles.field}><span>Reopen a downloaded model</span><input type="file" accept=".json,application/json" onChange={e=>{const file=e.target.files?.[0];e.target.value='';void importFile(file)}}/></label>
+ <p className={styles.small}>Saves contain model inputs and readiness answers, not contact-form details. They are available only in this browser on this site, and are lost if its storage is cleared. Download a file to move between preview and production. Changes are not saved automatically.</p>
+ {storageStatus&&<p className={styles.status} role="status">{storageStatus}</p>}
+ </div></section>
  </section>
  </div>
  <article className={styles.article} id="methodology">
  <div className={styles.eyebrow}>The field guide</div><h2>A retained record still has a cost to use.</h2><p>An archive answers whether a record was retained. Preparing an examination response also takes retrieval, context, review and a traceable explanation. This model prices that human work using your own inputs.</p>
  <h2>Count a task once.</h2><p>Enter communications review, meeting documentation and evidence retrieval as monthly hours. Enter incremental exam and annual-review preparation as annual hours. If finding a document is already counted under retrieval, do not count it again under preparation. Multi-firm teams can enter portfolio totals or an average firm workload.</p>
- <h2>The mathematics stays visible.</h2><p>Annual hours potentially released = baseline hours × workflow reduction × usable-evidence coverage × adoption. In the first months, this is multiplied by month ÷ ramp months, capped at one. Additional oversight and setup hours are then deducted.</p><p>Year-one capacity value = released hours × loaded hourly cost + confirmed retired-tool spend − subscription − implementation fee. Cash balance applies your cash-realisation share to the labour value. Existing archiving spend stays in place and contributes no savings. Preparation work is spread evenly across the year, so the chart models planning value rather than invoice timing.</p>
+ <h2>The mathematics stays visible.</h2><p>Annual hours potentially released = baseline hours × workflow reduction × usable-evidence coverage × adoption. In the first months, this is multiplied by month ÷ ramp months, capped at one. Additional oversight and setup hours are then deducted. Oversight defaults to hours per firm and scales with firm count independently of your workload-entry scope. Select portfolio total only when you have measured a total across all firms.</p><p>Year-one capacity value = released hours × loaded hourly cost + confirmed retired-tool spend − subscription − implementation fee. Cash balance applies your cash-realisation share to the labour value. Existing archiving spend stays in place and contributes no savings. Preparation work is spread evenly across the year, so the chart models planning value rather than invoice timing.</p>
  <div className={styles.insight}>All starting values and efficiency assumptions are illustrative. They are not customer results, industry benchmarks, a product quote or a guarantee. Use zero coverage for an unsupported evidence source. Validate the selected workflows and integrations with ComplyVault before using this estimate in a purchase decision.</div>
  <h2>Turn the estimate into a pilot.</h2><p>Choose one firm, one review workflow and one historical evidence request. Measure the original work, then repeat it with ComplyVault using the same evidence and review standard. Record corrections and checking time. Replace this model’s assumptions with the measured result.</p>
  <div className={styles.printOnly}><h2>Assumptions in this report</h2><pre style={{whiteSpace:'pre-wrap',fontSize:12}}>{JSON.stringify({scenario,...inputs,readiness:checks},null,2)}</pre></div>
@@ -179,7 +242,7 @@ export default function CapacityLab({reading}:{reading:Reading[]}) {
  <label className={styles.field+' '+styles.full}><span>Company</span><input name="company" type="text" autoComplete="organization" required maxLength={150} value={contact.company} onChange={e=>setContact(p=>({...p,company:e.target.value}))}/></label>
  <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{display:'none'}} value={contact.website} onChange={e=>setContact(p=>({...p,website:e.target.value}))}/>
  <label className={styles.checkbox+' '+styles.full}><input type="checkbox" name="consent" value="Please contact me about my assessment" required checked={contact.consent} onChange={e=>setContact(p=>({...p,consent:e.target.checked}))}/><span>I agree to share this model and my contact details with ComplyVault for a discussion about this assessment. <Link href="/privacy">Privacy policy</Link>.</span></label>
- <input type="hidden" name="_subject" value="ComplyVault capacity model discussion"/><input type="hidden" name="message" value={JSON.stringify({modelVersion:'1.0.0',scenario,assumptions:inputs,priceIncluded:priceKnown,readiness:checks,result})}/>
+ <input type="hidden" name="_subject" value="ComplyVault capacity model discussion"/><input type="hidden" name="message" value={JSON.stringify(assessment)}/>
  <div className={styles.full}>{captchaReady&&<Turnstile ref={captcha} siteKey={key!} onSuccess={setToken} onExpire={()=>setToken(null)} onError={()=>{setToken(null);setStatus('error')}}/>}
  {status==='error'&&<p role="alert" className={styles.error}>We could not submit this request. Please retry the verification, or <Link href="/contact">contact us directly</Link>. Your calculator inputs are still available.</p>}
  <button type="submit" className={styles.btn} disabled={status==='sending'||(captchaReady&&!token)||!contact.consent}>{status==='sending'?'Submitting…':'Discuss my model'}</button></div>
@@ -187,6 +250,6 @@ export default function CapacityLab({reading}:{reading:Reading[]}) {
  <p className={styles.small} style={{marginTop:16}}>No email is needed to use or export this calculator. Contact details and the model are sent only when you submit this form. No automated report email or newsletter subscription is created. After submission, you may be taken to a confirmation or verification page.</p>
  </section>
  {reading.length>0&&<section className={styles.noprint}><h2>Go deeper into the evidence.</h2><div className={styles.reading}>{reading.map(post=><Link key={post.slug} href={'/blog/'+post.slug} className={styles.card}>{post.image&&/* eslint-disable-next-line @next/next/no-img-element */<img src={post.image} alt={post.alt} loading="lazy" width="900" height="506"/>}<div><h3>{post.title}</h3><p>{post.excerpt}</p><span>Read field note →</span></div></Link>)}</div></section>}
- <footer className={styles.footer}><span>ComplyVault · Operational planning model, version 1.0</span><Link href="/privacy">Privacy</Link></footer>
+ <footer className={styles.footer}><span>ComplyVault · Operational planning model, version 1.1</span><Link href="/privacy">Privacy</Link></footer>
  </div></main>
 }

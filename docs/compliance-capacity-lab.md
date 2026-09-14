@@ -27,8 +27,8 @@ Formspree acceptance and CAPTCHA verification need end-to-end staging verificati
 No new personal data goes to calculator analytics. Existing site-wide analytics and tracking remain as configured.
 
 ## Validation
-Eight model checks executed successfully in the available JavaScript runtime using the exact model source and test bodies.
-Run with Node: node --test tests/capacity-model.test.mjs
+Seventeen model and persistence checks executed successfully in the available JavaScript runtime using the exact model source and test bodies.
+Run with Node: node --test tests/capacity-model.test.mjs tests/capacity-saved-models.test.mjs
 No local filesystem or browser runtime was available. Vercel successfully compiled, type-checked and generated the initial preview; an authenticated HTTP fetch returned 200 and confirmed calculator output plus three Sanity banners. The final revision is validated through Vercel before handoff. No real enquiry was sent and interactive browser/visual testing remains outstanding.
 Before release: verify desktop/mobile/keyboard/print in a browser, hosted and AJAX form success/error, CAPTCHA enforcement, correct Sanity artwork, and actual pricing. The preview build uses the existing Vercel pipeline. Reproduce locally with npm ci and npm run build.
 Review the existing /roi calculator separately: it retains its prior hard-coded 75% assumptions. This change does not rewrite that existing route.
@@ -36,3 +36,13 @@ Review the existing /roi calculator separately: it retains its prior hard-coded 
 ## Release
 Review branch: codex/compliance-capacity-model. No production merge is included.
 Blog CTAs link to the new calculator. A draft PR preserves the full implementation for review.
+
+## Version 1.1 review changes
+- Hours lead the hero; economic value is secondary. The heading now names review time rather than compliance risk.
+- Starting single-firm workload remains unchanged. Never calibrate workload to make a price appear attractive.
+- Oversight defaults to per-firm hours and scales independently of workload entry scope. Users may explicitly select measured portfolio-total overhead; both the basis and resulting total are visible.
+- ROI and payback are null in the calculation itself when no subscription quote is entered. JSON exports and both lead-submission paths share the same versioned assessment.
+- Up to 20 named models can be saved explicitly in this browser. Contact form data is excluded; there is no cloud sync or automatic save. Delete removes the selected saved copy, not current working inputs.
+- JSON import supports versions 1.0 and 1.1, validates known fields/ranges and recalculates results. Version 1.0 retains portfolio overhead to avoid silently rewriting historic assumptions. Unknown output/contact fields are discarded.
+- Browser storage exceptions, malformed import, oversized files, full saved lists and unsupported versions produce messages without replacing the current model. A downloadable JSON file moves models between browser origins/devices.
+- Seventeen calculation/persistence checks executed successfully in the available JavaScript runtime using exact source/test bodies. Vercel builds validate the Next.js integration; browser interaction and real enquiry delivery remain untested.

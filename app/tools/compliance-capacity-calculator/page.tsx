@@ -5,9 +5,11 @@ import CapacityLab from './capacity-lab'
 
 export const revalidate = 3600
 export const metadata: Metadata = {
- title: 'The cost of reconstructing compliance | ComplyVault Capacity Lab',
+ title: 'How much review time could your team reclaim? | ComplyVault Capacity Lab',
  description: 'Explore your review workload, evidence coverage and first-year capacity with a transparent, interactive ComplyVault model.',
  alternates: { canonical: '/tools/compliance-capacity-calculator' },
+ openGraph: {title:'How much review time could your team reclaim?',description:'Build and save an inspectable compliance capacity case using your own workload.',type:'website'},
+ twitter: {card:'summary',title:'ComplyVault Capacity Lab',description:'Model the review time your team could reclaim.'},
 }
 export default async function Page() {
  const posts = await getRecentPosts(3)

@@ -43,3 +43,27 @@ test('zero adoption, invalid numbers, zero capacity denominator',()=>{
  assert.ok(Number.isFinite(calculate({...DEFAULTS,hourly:Infinity,review:NaN}).net))
  assert.equal(calculate({...DEFAULTS,firmHours:0}).capacity,null)
 })
+
+test('unknown quote suppresses ROI and payback in the calculation itself',()=>{
+ const r=calculate()
+ assert.equal(r.priceIncluded,false);assert.equal(r.roi,null);assert.equal(r.breakEven,null)
+ assert.equal(r.valueBasis,'before_subscription')
+ const quoted=calculate({...DEFAULTS,monthlyPrice:249})
+ assert.equal(quoted.priceIncluded,true);assert.ok(quoted.roi!==null)
+})
+test('per-firm oversight scales independently of workload entry scope',()=>{
+ const s={...DEFAULTS,persona:'platform',firms:50,scope:'firm'}
+ const r=calculate(s)
+ assert.equal(r.overheadMonthly,100)
+ const portfolioWorkload=calculate({...s,scope:'portfolio'})
+ assert.equal(portfolioWorkload.overheadMonthly,100)
+ const fixed=calculate({...s,overheadScope:'portfolio'})
+ assert.equal(fixed.overheadMonthly,2)
+ assert.ok(Math.abs(fixed.released-r.released-98*12)<1e-7)
+})
+test('single firm hours stay unchanged; price is not used to tune the baseline',()=>{
+ const a=calculate(),b=calculate({...DEFAULTS,monthlyPrice:799})
+ assert.ok(Math.abs(a.released-101.056)<1e-7)
+ assert.equal(a.released,b.released)
+ assert.ok(Math.abs(b.net-12.32)<1e-7)
+})
