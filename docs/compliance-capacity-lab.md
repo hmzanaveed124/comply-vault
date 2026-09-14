@@ -22,15 +22,15 @@ All defaults are illustrative. No industry performance benchmarks or regulatory 
 
 ## Lead flow
 The explicit discussion form submits contact details and an assumption/result snapshot to the same Formspree endpoint already used by components/DemoForm.tsx.
-Requires a real NEXT_PUBLIC_TURNSTILE_SITE_KEY; without one the page links to /contact. No fake email report success, newsletter signup, Attio integration or customer submission was performed.
+When a real NEXT_PUBLIC_TURNSTILE_SITE_KEY is configured, the form uses the existing AJAX + Turnstile pattern. Without a real key it uses a native HTML POST to the same Formspree endpoint so the provider can handle hosted verification/confirmation; all contact fields, consent, a honeypot and the complete model snapshot are included. No fake email report success, newsletter signup, Attio integration or customer submission was performed.
 Formspree acceptance and CAPTCHA verification need end-to-end staging verification. Client verification alone is not proof of server verification. Confirm Turnstile enforcement in the existing Formspree form configuration before publication; use its supported spam controls.
 No new personal data goes to calculator analytics. Existing site-wide analytics and tracking remain as configured.
 
 ## Validation
 Eight model checks executed successfully in the available JavaScript runtime using the exact model source and test bodies.
 Run with Node: node --test tests/capacity-model.test.mjs
-No filesystem, Next.js build, browser runtime, or live lead-submission test was available in the authoring session.
-Before release: npm ci; npm run build; verify desktop/mobile/keyboard/print, CAPTCHA success/error, correct Sanity artwork, the Vercel preview, and actual pricing.
+No local filesystem or browser runtime was available. Vercel successfully compiled, type-checked and generated the initial preview; an authenticated HTTP fetch returned 200 and confirmed calculator output plus three Sanity banners. The final revision is validated through Vercel before handoff. No real enquiry was sent and interactive browser/visual testing remains outstanding.
+Before release: verify desktop/mobile/keyboard/print in a browser, hosted and AJAX form success/error, CAPTCHA enforcement, correct Sanity artwork, and actual pricing. The preview build uses the existing Vercel pipeline. Reproduce locally with npm ci and npm run build.
 Review the existing /roi calculator separately: it retains its prior hard-coded 75% assumptions. This change does not rewrite that existing route.
 
 ## Release
