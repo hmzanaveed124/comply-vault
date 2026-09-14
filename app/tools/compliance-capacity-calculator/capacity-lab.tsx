@@ -60,7 +60,7 @@ function ValueChart({result,priceKnown}:{result:Result;priceKnown:boolean}) {
  <path d={path('cash')} fill="none" stroke="#b65031" strokeWidth="2.5" strokeDasharray="6 4"/>
  {[0,3,6,9,12].map(m=><text key={m} x={x(m)} y="255" textAnchor="middle">{m===0?'Setup':'M'+m}</text>)}
  <line x1={x(month)} x2={x(month)} y1="30" y2="230" stroke="#12372c" opacity=".3"/>
- {result.months.map(p=><circle key={p.month} cx={x(p.month)} cy={y(p.net)} r={month===p.month?6:4} fill="#117a4b" tabIndex={0} role="button" aria-label={'Month '+p.month+': '+currency(p.net)} onMouseEnter={()=>setMonth(p.month)} onFocus={()=>setMonth(p.month)} onClick={()=>setMonth(p.month)} onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();setMonth(p.month)}}/>)}
+ {result.months.map(p=><circle key={p.month} cx={x(p.month)} cy={y(p.net)} r={month===p.month?6:4} fill="#117a4b" tabIndex={0} role="button" aria-label={'Month '+p.month+': '+currency(p.net)} onMouseEnter={()=>setMonth(p.month)} onFocus={()=>setMonth(p.month)} onClick={()=>setMonth(p.month)} onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();setMonth(p.month)}}}/>)}
  </svg>
  <label className={styles.field}><span>Explore month {month}<b>{currency(selected.net)}</b></span><input type="range" min="0" max="12" value={month} onChange={e=>setMonth(Number(e.target.value))}/><small>USD · cash balance: {currency(selected.cash)}. Preparation effort is spread evenly over the year for planning.</small></label>
  </>
