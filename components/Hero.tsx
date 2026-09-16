@@ -1,16 +1,21 @@
 'use client'
 
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { ArrowRight, Shield, FileCheck, Clock, CheckCircle2, Scale, Users } from 'lucide-react'
+import { ArrowRight, Shield, FileCheck, CheckCircle2, Scale, MessagesSquare, Mail, Video } from 'lucide-react'
 import { Button } from './Button'
 
 export function Hero() {
   const pathname = usePathname()
   const isUK = pathname?.startsWith('/uk') ?? false
   
-  const badgeText = isUK 
-    ? 'Built for FCA SYSC 9 supervision & monitoring'
-    : 'Built for SEC & state RIA exams'
+  const badgeText = isUK
+    ? 'The evidence layer for FCA supervision'
+    : 'The evidence layer for RIA supervision'
+
+  const supportingCopy = isUK
+    ? 'ComplyVault sits above your existing archive to turn client meetings, email and messages into a prioritised compliance review queue and source-linked evidence packs — while keeping final judgement with your compliance team.'
+    : 'ComplyVault sits above your existing archive to turn client meetings, email, and messages into a prioritized CCO review queue and source-linked evidence packs — while keeping final judgment with your compliance team.'
   
   return (
     <section className="relative min-h-screen pt-28 pb-20 overflow-hidden noise-texture">
@@ -35,26 +40,24 @@ export function Hero() {
             </div>
 
             {/* Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-display leading-tight mb-8 text-foreground animate-fade-in-up">
-              Turn client meetings into{' '}
-              <span className="text-gradient">exam-ready audit documentation</span>{' '}
-              — in minutes.
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-display leading-[1.06] mb-8 text-foreground animate-fade-in-up">
+              Find what needs attention.{' '}
+              <span className="text-gradient">Prove how it was handled.</span>
             </h1>
 
             {/* Subheadline */}
             <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed mb-10 max-w-xl mx-auto lg:mx-0 animate-fade-in-up animation-delay-100">
-              Upload recordings from Zoom, Teams, Google Meet, Webex, and more. Generate timestamped supervision notes with evidence links. 
-              Review, finalize, and export a defensible documentation pack.
+              {supportingCopy}
             </p>
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12 animate-fade-in-up animation-delay-200">
               <Button href="/sample-audit-pack" size="lg" className="group">
-                See a sample export pack
+                See a sample evidence pack
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
               <Button href="#cta" variant="outline" size="lg" className="group">
-                Book a demo
+                Book a pilot walkthrough
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
@@ -62,16 +65,16 @@ export function Hero() {
             {/* Trust Indicators - Actually Built Features */}
             <div className="flex flex-wrap gap-6 justify-center lg:justify-start text-sm text-muted-foreground animate-fade-in-up animation-delay-300 mb-6">
               <div className="flex items-center gap-2">
-                <Clock className="w-5 h-5 text-vault-green-500 dark:text-vault-green-400" />
-                <span>Evidence timestamps</span>
-              </div>
-              <div className="flex items-center gap-2">
                 <FileCheck className="w-5 h-5 text-vault-green-500 dark:text-vault-green-400" />
-                <span>Audit trail logging</span>
+                <span>Source-linked findings</span>
               </div>
               <div className="flex items-center gap-2">
-                <Users className="w-5 h-5 text-vault-green-500 dark:text-vault-green-400" />
-                <span>CCO-only finalization</span>
+                <Shield className="w-5 h-5 text-vault-green-500 dark:text-vault-green-400" />
+                <span>Human approval</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-vault-green-500 dark:text-vault-green-400" />
+                <span>Exam-ready evidence</span>
               </div>
             </div>
 
@@ -89,83 +92,46 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Right Column - Dashboard Mockup */}
+          {/* Right Column - brand illustration + supervisory outcome */}
           <div className="relative animate-fade-in-up animation-delay-200">
-            <div className="relative">
-              {/* Main Dashboard Card */}
-              <div className="bg-card dark:card-elevated rounded-3xl shadow-2xl shadow-foreground/10 dark:shadow-black/30 p-6 border border-border dark:glow-green">
-                {/* Dashboard Header */}
-                <div className="flex items-center justify-between mb-6">
-                  <div>
-                    <h3 className="text-lg font-semibold text-card-foreground">Review Queue</h3>
-                    <p className="text-sm text-muted-foreground">Client interaction records</p>
-                  </div>
-                  <div className="flex items-center gap-2 px-3 py-1.5 bg-vault-green-500/10 dark:bg-vault-green-500/15 text-vault-green-600 dark:text-vault-green-400 rounded-full text-sm font-medium border border-vault-green-500/20">
-                    <span className="w-2 h-2 bg-vault-green-500 rounded-full animate-pulse" />
-                    Ready for Review
-                  </div>
-                </div>
+            <div className="relative mx-auto min-h-[540px] max-w-[680px] lg:min-h-[620px]">
+              <div className="absolute inset-0 rounded-[3rem] bg-vault-green-500/10 blur-3xl dark:bg-vault-green-500/15" />
+              <Image
+                src="/complyvault-hero-brush.webp"
+                alt="Brush strokes representing meetings, email, and messages becoming an ordered evidence trail"
+                width={720}
+                height={640}
+                sizes="(min-width: 1024px) 48vw, 92vw"
+                className="relative z-10 h-auto w-full object-contain drop-shadow-[0_30px_55px_rgba(4,25,15,0.22)]"
+                priority
+              />
 
-                {/* Stats Row */}
-                <div className="grid grid-cols-3 gap-4 mb-6">
-                  <div className="bg-muted dark:bg-white/5 rounded-xl p-4 text-center border border-transparent dark:border-white/5">
-                    <div className="text-2xl font-bold text-vault-green-500 dark:text-vault-green-400">12</div>
-                    <div className="text-xs text-muted-foreground">Finalized</div>
-                  </div>
-                  <div className="bg-muted dark:bg-white/5 rounded-xl p-4 text-center border border-transparent dark:border-white/5">
-                    <div className="text-2xl font-bold text-card-foreground">3</div>
-                    <div className="text-xs text-muted-foreground">Drafts</div>
-                  </div>
-                  <div className="bg-muted dark:bg-white/5 rounded-xl p-4 text-center border border-transparent dark:border-white/5">
-                    <div className="text-2xl font-bold text-card-foreground">8m</div>
-                    <div className="text-xs text-muted-foreground">Avg. Review</div>
-                  </div>
-                </div>
-
-                {/* Recent Activity */}
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3 p-3 bg-vault-green-500/10 dark:bg-vault-green-500/15 rounded-xl border border-vault-green-500/20">
-                    <FileCheck className="w-5 h-5 text-vault-green-500 dark:text-vault-green-400" />
-                    <div className="flex-1">
-                      <p className="text-sm font-medium text-card-foreground">Johnson Portfolio Review</p>
-                      <p className="text-xs text-muted-foreground">Finalized by Sarah (CCO)</p>
-                    </div>
-                    <CheckCircle2 className="w-5 h-5 text-vault-green-500 dark:text-vault-green-400" />
-                  </div>
-                  <div className="flex items-center gap-3 p-3 bg-muted dark:bg-white/5 rounded-xl border border-transparent dark:border-white/5">
-                    <Clock className="w-5 h-5 text-vault-coral-500 dark:text-vault-coral-400" />
-                    <div className="flex-1">
-                      <p className="text-sm font-medium text-card-foreground">Smith Retirement Planning</p>
-                      <p className="text-xs text-muted-foreground">Draft ready • 45 min meeting</p>
-                    </div>
-                    <span className="text-xs font-medium text-muted-foreground bg-muted dark:bg-white/5 px-2 py-1 rounded-full">
-                      Review
-                    </span>
-                  </div>
-                </div>
+              <div className="absolute left-2 top-16 z-20 flex flex-col gap-2 sm:left-8 sm:top-20">
+                <div className="hero-source-chip"><Video className="h-4 w-4" /> Meetings</div>
+                <div className="hero-source-chip"><Mail className="h-4 w-4" /> Email</div>
+                <div className="hero-source-chip"><MessagesSquare className="h-4 w-4" /> Messages</div>
               </div>
 
-              {/* Floating Cards - Hidden for now */}
-              <div className="hidden absolute -top-[19%] -right-[19%] bg-card dark:bg-[hsl(160_35%_12%)] rounded-2xl shadow-xl shadow-foreground/10 dark:shadow-black/30 p-4 border border-border float-slow">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-vault-green-100 dark:bg-vault-green-800/30 rounded-xl flex items-center justify-center">
-                    <Shield className="w-5 h-5 text-vault-green-500 dark:text-vault-green-400" />
-                  </div>
+              <div className="absolute bottom-0 left-1/2 z-20 w-[92%] -translate-x-1/2 rounded-2xl border border-border/80 bg-card/90 p-4 shadow-2xl shadow-foreground/10 backdrop-blur-xl dark:border-white/10 dark:bg-[hsl(160_35%_9%)/0.9] sm:bottom-4 sm:w-[84%] sm:p-5">
+                <div className="flex items-start justify-between gap-4">
                   <div>
-                    <p className="text-sm font-semibold text-card-foreground">Evidence Linked</p>
-                    <p className="text-xs text-muted-foreground">23 timestamps</p>
+                    <p className="font-display text-base font-semibold text-card-foreground">CCO Priority Inbox</p>
+                    <p className="mt-1 text-xs text-muted-foreground">One decision surface across supervisory evidence</p>
                   </div>
+                  <span className="rounded-full border border-vault-green-500/20 bg-vault-green-500/10 px-2.5 py-1 text-xs font-medium text-vault-green-600 dark:text-vault-green-400">Evidence linked</span>
                 </div>
-              </div>
-
-              <div className="hidden absolute -bottom-[24%] -left-[10%] bg-card dark:bg-[hsl(160_35%_12%)] rounded-2xl shadow-xl shadow-foreground/10 dark:shadow-black/30 p-4 border border-border float-medium">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-vault-coral-100 dark:bg-vault-coral-800/30 rounded-xl flex items-center justify-center">
-                    <FileCheck className="w-5 h-5 text-vault-coral-500 dark:text-vault-coral-400" />
+                <div className="mt-4 grid grid-cols-3 gap-2 sm:gap-3">
+                  <div className="rounded-xl bg-vault-green-500/10 px-3 py-2.5">
+                    <div className="text-lg font-bold text-vault-green-600 dark:text-vault-green-400">12</div>
+                    <div className="text-[11px] text-muted-foreground sm:text-xs">Cleared</div>
                   </div>
-                  <div>
-                    <p className="text-sm font-semibold text-card-foreground">Export Pack</p>
-                    <p className="text-xs text-muted-foreground">PDF + CSV + ZIP</p>
+                  <div className="rounded-xl bg-vault-coral-500/10 px-3 py-2.5">
+                    <div className="text-lg font-bold text-vault-coral-600 dark:text-vault-coral-400">3</div>
+                    <div className="text-[11px] text-muted-foreground sm:text-xs">Needs attention</div>
+                  </div>
+                  <div className="rounded-xl bg-muted px-3 py-2.5 dark:bg-white/5">
+                    <div className="text-lg font-bold text-card-foreground">1</div>
+                    <div className="text-[11px] text-muted-foreground sm:text-xs">Escalated</div>
                   </div>
                 </div>
               </div>
