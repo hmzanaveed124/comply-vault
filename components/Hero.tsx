@@ -94,25 +94,25 @@ export function Hero() {
 
           {/* Right Column - brand illustration + supervisory outcome */}
           <div className="relative animate-fade-in-up animation-delay-200">
-            <div className="relative mx-auto min-h-[540px] max-w-[680px] lg:min-h-[620px]">
+            <div className="relative mx-auto max-w-[680px] pb-4">
               <div className="absolute inset-0 rounded-[3rem] bg-vault-green-500/10 blur-3xl dark:bg-vault-green-500/15" />
               <Image
                 src="/complyvault-hero-brush.webp"
-                alt="Brush strokes representing meetings, email, and messages becoming an ordered evidence trail"
-                width={720}
-                height={640}
+                alt="Sage and ivory communication trails pass through a gold supervisory review point and continue as linked evidence on a deep forest canvas"
+                width={1200}
+                height={800}
                 sizes="(min-width: 1024px) 48vw, 92vw"
-                className="relative z-10 h-auto w-full object-contain drop-shadow-[0_30px_55px_rgba(4,25,15,0.22)]"
+                className="relative z-10 h-auto w-full rounded-2xl object-contain shadow-xl"
                 priority
               />
 
-              <div className="absolute left-2 top-16 z-20 flex flex-col gap-2 sm:left-8 sm:top-20">
+              <div className="relative z-20 mt-4 flex flex-wrap justify-center gap-2">
                 <div className="hero-source-chip"><Video className="h-4 w-4" /> Meetings</div>
                 <div className="hero-source-chip"><Mail className="h-4 w-4" /> Email</div>
                 <div className="hero-source-chip"><MessagesSquare className="h-4 w-4" /> Messages</div>
               </div>
 
-              <div className="absolute bottom-0 left-1/2 z-20 w-[92%] -translate-x-1/2 rounded-2xl border border-border/80 bg-card/90 p-4 shadow-2xl shadow-foreground/10 backdrop-blur-xl dark:border-white/10 dark:bg-[hsl(160_35%_9%)/0.9] sm:bottom-4 sm:w-[84%] sm:p-5">
+              <div className="relative z-20 mx-auto mt-4 w-full rounded-2xl border border-border/80 bg-card/90 p-4 shadow-2xl shadow-foreground/10 backdrop-blur-xl dark:border-white/10 dark:bg-[hsl(160_35%_9%)/0.9] sm:p-5">
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <p className="font-display text-base font-semibold text-card-foreground">CCO Priority Inbox</p>
@@ -125,8 +125,8 @@ export function Hero() {
                     <div className="text-lg font-bold text-vault-green-600 dark:text-vault-green-400">12</div>
                     <div className="text-[11px] text-muted-foreground sm:text-xs">Cleared</div>
                   </div>
-                  <div className="rounded-xl bg-vault-coral-500/10 px-3 py-2.5">
-                    <div className="text-lg font-bold text-vault-coral-600 dark:text-vault-coral-400">3</div>
+                  <div className="rounded-xl bg-[#b8954f]/10 px-3 py-2.5">
+                    <div className="text-lg font-bold text-[#806020] dark:text-[#d8b86f]">3</div>
                     <div className="text-[11px] text-muted-foreground sm:text-xs">Needs attention</div>
                   </div>
                   <div className="rounded-xl bg-muted px-3 py-2.5 dark:bg-white/5">
