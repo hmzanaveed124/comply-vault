@@ -259,11 +259,19 @@
   box-shadow: 0 0 60px -15px hsl(16 54% 55% / 0.2);
 }
 
-/* Hero evidence-source labels */
-.hero-source-chip {
-  @apply inline-flex w-fit items-center gap-2 rounded-full border border-border/80 bg-card/90 px-3 py-2 text-xs font-semibold text-card-foreground shadow-lg shadow-foreground/10 backdrop-blur-lg;
+/* The artwork fades into the same surface as the page, without a card boundary. */
+.cv-hero { isolation: isolate; }
+.cv-hero-figure { width: 116%; margin-left: -8%; }
+.cv-hero-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  -webkit-mask-image: radial-gradient(ellipse closest-side at 51% 50%, #000 40%, rgba(0,0,0,.88) 66%, transparent 100%);
+  mask-image: radial-gradient(ellipse closest-side at 51% 50%, #000 40%, rgba(0,0,0,.88) 66%, transparent 100%);
 }
-
-.dark .hero-source-chip {
-  @apply border-white/10 bg-[hsl(160_35%_9%)/0.88];
+@media (min-width: 1024px) {
+  .cv-hero-figure { width: 145%; margin-left: -20%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cv-hero .animate-fade-in-up { animation: none; }
 }
