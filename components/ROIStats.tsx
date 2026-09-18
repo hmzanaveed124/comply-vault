@@ -111,7 +111,7 @@ export function ROIStats() {
             Ready to see these results for your firm?
           </p>
           <a
-            href="#cta"
+            href="/tools/compliance-capacity-calculator"
             className="inline-flex items-center gap-2 bg-white text-vault-green-600 font-semibold px-8 py-4 rounded-xl hover:bg-vault-green-50 transition-colors shadow-xl hover:shadow-2xl"
           >
             Calculate Your Savings
