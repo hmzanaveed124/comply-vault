@@ -26,6 +26,7 @@ export function Navigation(): React.ReactElement {
     { label: 'Solutions', href: isUK ? '/uk/fca-compliance-software' : '/ria-compliance-software' },
     { label: 'Features', href: '/features' },
     { label: 'Blog', href: '/blog' },
+    { label: 'Free Assessment', href: '/tools/ria-compliance-stack-assessment' },
     { label: 'How It Works', href: getAnchorLink('#how-it-works') },
     { label: 'Security', href: getAnchorLink('#security') },
     { label: 'Pricing', href: isUK ? '/uk/pricing' : '/pricing' },
