@@ -82,6 +82,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             priority: 0.75,
         },
         {
+            url: `${SITE_URL}/tools/ria-compliance-stack-assessment`,
+            lastModified: new Date('2026-09-19'),
+            changeFrequency: 'monthly',
+            priority: 0.85,
+        },
+        {
             url: `${SITE_URL}/sample-audit-pack`,
             lastModified: new Date('2026-01-23'),
             changeFrequency: 'monthly',
