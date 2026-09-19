@@ -51,6 +51,8 @@ export function Footer() {
     resources: {
       title: 'Resources',
       links: [
+        { label: 'Free RIA Stack Assessment', href: '/tools/ria-compliance-stack-assessment' },
+        { label: 'Compliance Capacity Calculator', href: '/tools/compliance-capacity-calculator' },
         { label: 'Blog', href: '/blog' },
         { label: 'FAQ', href: isUK ? '/uk#faq' : '/#faq' },
         { label: 'Book a Demo', href: isUK ? '/uk#cta' : '/#cta' },
@@ -97,8 +99,7 @@ export function Footer() {
               </span>
             </a>
             <p className="text-gray-500 dark:text-gray-400 mb-7 max-w-xs leading-relaxed">
-              Turn meeting recordings into exam-ready client interaction records. 
-              Upload, review, finalize, export.
+              Find what needs attention. Prove how it was handled. ComplyVault gives RIA compliance teams a source-linked supervisory layer across their existing systems.
             </p>
             
             {/* Contact Info */}
