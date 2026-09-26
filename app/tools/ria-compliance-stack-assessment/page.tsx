@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Navigation, Footer } from '@/components'
+import { StackAssessmentApp } from '@/components/stack-assessment/StackAssessmentApp'
 import { SITE_URL } from '@/lib/site'
-import Assessment from './assessment'
 
 export const metadata: Metadata = {
   title: 'Free RIA Compliance Stack Assessment | ComplyVault',
@@ -23,7 +23,7 @@ export default function RIAComplianceStackAssessmentPage() {
   return (
     <main className="min-h-screen bg-background">
       <Navigation />
-      <Assessment />
+      <StackAssessmentApp />
       <Footer />
     </main>
   )

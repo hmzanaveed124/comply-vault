@@ -28,6 +28,10 @@ const sections = [
         subtitle: 'Usage Data',
         text: 'We collect information about how you use our service, including features accessed, time spent, and actions taken. This helps us improve the product.',
       },
+      {
+        subtitle: 'Free tools (Stack Assessment)',
+        text: 'If you use the RIA Compliance Stack Assessment, we store anonymous assessment answers, progress, results, and first-party attribution (landing path, referrer, and UTM parameters when present) so we can measure completion and improve the tool. Work email, firm name, and role are collected only if you optionally request a detailed Stack Review. We do not require an account or phone number to use the assessment. Assessment answers and contact details are not sent to third-party advertising or visitor-identification tools as part of this feature; site-wide analytics tools already present on ComplyVault may still receive aggregate page and event signals (for example, that an assessment was started or completed), without assessment answer content or your email address.',
+      },
     ],
   },
   {
@@ -40,7 +44,7 @@ const sections = [
       },
       {
         subtitle: 'Communication',
-        text: 'We may send you service-related emails, product updates, and marketing communications (which you can opt out of).',
+        text: 'We may send you service-related emails, product updates, and marketing communications (which you can opt out of). If you request a detailed Stack Review, we use your work email to send that review and may follow up about relevant ComplyVault capabilities.',
       },
       {
         subtitle: 'Security & Compliance',
@@ -62,7 +66,7 @@ const sections = [
       },
       {
         subtitle: 'Access Controls',
-        text: 'We implement strict role-based access controls. Only authorized personnel can access your data, and all access is logged.',
+        text: 'We implement strict role-based access controls. Only authorized personnel can access your data, and all access is logged. Optional assessment lead details are stored separately from anonymous funnel analytics and are not exposed through public APIs.',
       },
     ],
   },
@@ -72,7 +76,7 @@ const sections = [
     content: [
       {
         subtitle: 'Retention Period',
-        text: 'We retain your data for as long as your account is active or as needed to provide services. Meeting records are retained per your workspace settings (default 6 years for SEC compliance).',
+        text: 'We retain your data for as long as your account is active or as needed to provide services. Meeting records are retained per your workspace settings (default 6 years for SEC compliance). Anonymous assessment analytics and optional review requests are retained as needed for sales follow-up and product improvement, and can be deleted on request where legally permitted.',
       },
       {
         subtitle: 'Deletion Requests',
