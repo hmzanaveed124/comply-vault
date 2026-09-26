@@ -58,11 +58,11 @@ export function DetailedReviewForm({
     return (
       <div className="rounded-3xl border border-vault-green-500/30 bg-vault-green-500/5 p-6 sm:p-8">
         <h3 className="font-display text-2xl font-bold text-foreground">
-          Detailed review requested
+          Evidence review request received
         </h3>
         <p className="mt-3 text-sm leading-6 text-muted-foreground">
-          Thanks - your personalized Stack Review is on its way to your inbox. You can also
-          book a short walkthrough if you want to discuss the gaps live.
+          Thanks. We will use your work email to discuss the scope and price before any
+          review begins. Please do not send client records through this form.
         </p>
       </div>
     )
@@ -74,11 +74,13 @@ export function DetailedReviewForm({
         Optional
       </p>
       <h3 className="mt-2 font-display text-2xl font-bold text-foreground">
-        Want your detailed Stack Review?
+        Request a detailed evidence review
       </h3>
       <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
-        Get your personalized breakdown of gaps, duplication and areas that may deserve
-        attention.
+        Go beyond these self-reported answers. We can agree on a small sample of your
+        communications and supervisory records, then use ComplyVault to trace the source,
+        review, decision and follow-up. This is a scoped, paid review; we will discuss the
+        scope and price with you before any work or data access. It is not a regulatory audit.
       </p>
 
       <form onSubmit={onSubmit} className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -135,15 +137,19 @@ export function DetailedReviewForm({
             disabled={submitting}
             className="inline-flex items-center justify-center rounded-xl bg-vault-green-500 px-5 py-3 font-semibold text-white transition hover:bg-vault-green-600 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {submitting ? 'Sending…' : 'Send my detailed review'}
+            {submitting ? 'Sending…' : 'Request an evidence review'}
           </button>
           <Link
             href="/#cta"
             className="text-sm font-semibold text-muted-foreground underline-offset-4 transition hover:text-foreground hover:underline"
           >
-            Book a 20-minute Stack Review
+            Prefer a conversation? Book a call
           </Link>
         </div>
+        <p className="sm:col-span-2 text-sm leading-6 text-muted-foreground">
+          We will contact you about this request. Do not include client information here.
+          See our <Link href="/privacy" className="underline underline-offset-4">privacy policy</Link>.
+        </p>
       </form>
     </section>
   )
