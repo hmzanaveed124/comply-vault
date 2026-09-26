@@ -151,3 +151,31 @@ export async function captureLead(input: {
     return { success: false, error: 'Network error' }
   }
 }
+
+export async function requestEvidenceReview(input: {
+  assessmentId: string
+  accessToken: string
+  email: string
+  firmName?: string
+  role?: string
+}): Promise<{ success: boolean; error?: string }> {
+  try {
+    const response = await fetch(
+      `${getAssessmentApiBase()}/api/assessments/${input.assessmentId}/evidence-review`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Assessment-Token': input.accessToken,
+        },
+        body: JSON.stringify(input),
+      },
+    )
+    const json = await parseJson<{ message: string }>(response)
+    return response.ok && json.success
+      ? { success: true }
+      : { success: false, error: json.success === false ? json.error : 'Request failed' }
+  } catch {
+    return { success: false, error: 'Network error. Please try again.' }
+  }
+}
