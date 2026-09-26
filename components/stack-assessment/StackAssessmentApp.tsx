@@ -22,6 +22,7 @@ import {
   TriangleAlert,
 } from 'lucide-react'
 import { DetailedReviewForm } from '@/components/stack-assessment/DetailedReviewForm'
+import { EvidenceReviewRequestForm } from '@/components/stack-assessment/EvidenceReviewRequestForm'
 import {
   createAssessment,
   resumeAssessment,
@@ -599,6 +600,8 @@ export function StackAssessmentApp(): React.ReactElement {
                     ))}
                   </div>
                 </section>
+
+                <EvidenceReviewRequestForm assessmentId={assessmentId} accessToken={accessToken} />
 
                 <DetailedReviewForm
                   assessmentId={assessmentId}

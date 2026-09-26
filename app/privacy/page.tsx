@@ -30,7 +30,7 @@ const sections = [
       },
       {
         subtitle: 'Free tools (Stack Assessment)',
-        text: 'If you use the RIA Compliance Stack Assessment, we store anonymous assessment answers, progress, results, and first-party attribution (landing path, referrer, and UTM parameters when present) so we can measure completion and improve the tool. Work email, firm name, and role are collected only if you optionally request a detailed Stack Review. We do not require an account or phone number to use the assessment. Assessment answers and contact details are not sent to third-party advertising or visitor-identification tools as part of this feature; site-wide analytics tools already present on ComplyVault may still receive aggregate page and event signals (for example, that an assessment was started or completed), without assessment answer content or your email address.',
+        text: 'If you use the RIA Compliance Stack Assessment, we store anonymous assessment answers, progress, results, and first-party attribution (landing path, referrer, and UTM parameters when present) so we can measure completion and improve the tool. Work email, firm name, and role are collected only if you optionally request a detailed Stack Review or a paid evidence review. We do not require an account or phone number to use the assessment. Assessment answers and contact details are not sent to third-party advertising or visitor-identification tools as part of this feature; site-wide analytics tools already present on ComplyVault may still receive aggregate page and event signals (for example, that an assessment was started or completed), without assessment answer content or your email address.',
       },
     ],
   },
@@ -44,7 +44,7 @@ const sections = [
       },
       {
         subtitle: 'Communication',
-        text: 'We may send you service-related emails, product updates, and marketing communications (which you can opt out of). If you request a detailed Stack Review, we use your work email to send that review and may follow up about relevant ComplyVault capabilities.',
+        text: 'We may send you service-related emails, product updates, and marketing communications (which you can opt out of). If you request a detailed Stack Review, we use your work email to send that review and may follow up about relevant ComplyVault capabilities. If you request a paid evidence review, we use your work email to discuss its scope and price. Submitting a request does not authorize access to your records.',
       },
       {
         subtitle: 'Security & Compliance',

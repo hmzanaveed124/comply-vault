@@ -74,11 +74,11 @@ export function DetailedReviewForm({
         Optional
       </p>
       <h3 className="mt-2 font-display text-2xl font-bold text-foreground">
-        Want your detailed Stack Review?
+        Email me my free Stack Review
       </h3>
       <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
-        Get your personalized breakdown of gaps, duplication and areas that may deserve
-        attention.
+        Get a fuller breakdown based on your answers, including potential gaps and
+        duplication. This free report does not examine your records.
       </p>
 
       <form onSubmit={onSubmit} className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -135,7 +135,7 @@ export function DetailedReviewForm({
             disabled={submitting}
             className="inline-flex items-center justify-center rounded-xl bg-vault-green-500 px-5 py-3 font-semibold text-white transition hover:bg-vault-green-600 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {submitting ? 'Sending…' : 'Send my detailed review'}
+            {submitting ? 'Sending…' : 'Send my free Stack Review'}
           </button>
           <Link
             href="/#cta"
