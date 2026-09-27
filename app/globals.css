@@ -258,3 +258,20 @@
 .dark .glow-coral {
   box-shadow: 0 0 60px -15px hsl(16 54% 55% / 0.2);
 }
+
+/* The artwork fades into the same surface as the page, without a card boundary. */
+.cv-hero { isolation: isolate; }
+.cv-hero-figure { width: 116%; margin-left: -8%; }
+.cv-hero-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  -webkit-mask-image: radial-gradient(ellipse closest-side at 51% 50%, #000 40%, rgba(0,0,0,.88) 66%, transparent 100%);
+  mask-image: radial-gradient(ellipse closest-side at 51% 50%, #000 40%, rgba(0,0,0,.88) 66%, transparent 100%);
+}
+@media (min-width: 1024px) {
+  .cv-hero-figure { width: 145%; margin-left: -20%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cv-hero .animate-fade-in-up { animation: none; }
+}
