@@ -28,21 +28,21 @@ const spaceMono = Space_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: 'Comply Vault | RIA Compliance Made Simple',
-  description: 'The all-in-one compliance vault for Registered Investment Advisors. Automate compliance workflows, manage documentation, and stay audit-ready with ease.',
+  title: 'ComplyVault | Supervisory Evidence Layer for RIAs',
+  description: 'ComplyVault sits above your existing archive to route supervisory attention and preserve source-linked decisions. AI assists; humans remain accountable.',
   keywords: ['RIA compliance', 'investment advisor', 'compliance management', 'SEC compliance', 'regulatory compliance', 'compliance software'],
   authors: [{ name: 'Comply Vault' }],
   openGraph: {
-    title: 'Comply Vault | RIA Compliance Made Simple',
-    description: 'The all-in-one compliance vault for Registered Investment Advisors. Automate workflows, manage documentation, and stay audit-ready.',
+    title: 'ComplyVault | Supervisory Evidence Layer for RIAs',
+    description: 'Find what needs attention. Prove how it was handled. Supervisory evidence above your existing archive.',
     type: 'website',
     locale: 'en_US',
     siteName: 'Comply Vault',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Comply Vault | RIA Compliance Made Simple',
-    description: 'The all-in-one compliance vault for Registered Investment Advisors.',
+    title: 'ComplyVault | Supervisory Evidence Layer for RIAs',
+    description: 'Supervisory evidence above your existing archive. AI assists; humans remain accountable.',
   },
   robots: {
     index: true,

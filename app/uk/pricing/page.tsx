@@ -6,8 +6,8 @@ import { ukPricingContent } from '@/src/content/uk/pricing'
 import { SITE_URL } from '@/lib/site'
 
 export const metadata: Metadata = {
-  title: 'Pricing | Comply Vault - UK FCA Compliance Software',
-  description: 'Flexible plans for UK financial services firms of every size. Essentials, Professional, and Enterprise tiers. No hidden fees.',
+  title: 'UK Pricing Enquiries | ComplyVault',
+  description: 'Explore plans for supervisory evidence workflows. UK/FCA is a secondary market; contact us to confirm scope and availability.',
   alternates: {
     canonical: `${SITE_URL}/uk/pricing`,
     languages: {
@@ -60,7 +60,7 @@ export default async function UKPricingPage() {
           <h2 className="text-3xl font-bold text-center mb-10">Frequently Asked Questions</h2>
           <div className="space-y-6">
             {content.faqs.map((faq, index) => (
-              <details 
+              <details
                 key={index}
                 className="group bg-card rounded-xl border border-border p-6 hover:border-primary/30 transition-all duration-300"
               >

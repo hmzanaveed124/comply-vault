@@ -7,18 +7,18 @@ import { Button } from './Button'
 export function Hero() {
   const pathname = usePathname()
   const isUK = pathname?.startsWith('/uk') ?? false
-  
-  const badgeText = isUK 
-    ? 'Built for FCA SYSC 9 supervision & monitoring'
-    : 'Built for SEC & state RIA exams'
-  
+
+  const badgeText = isUK
+    ? 'Supervisory evidence workflows — UK enquiries'
+    : 'Supervisory evidence layer for RIAs'
+
   return (
     <section className="relative min-h-screen pt-28 pb-20 overflow-hidden noise-texture">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-grid opacity-50" />
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-radial from-vault-green-500/10 via-transparent to-transparent dark:from-vault-green-500/8" />
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-radial from-vault-coral-500/5 via-transparent to-transparent dark:from-vault-coral-500/5" />
-      
+
       {/* Floating decorative elements */}
       <div className="absolute top-40 left-10 w-20 h-20 bg-vault-green-100 dark:bg-vault-green-800/20 rounded-2xl rotate-12 float-slow opacity-60" />
       <div className="absolute top-72 right-20 w-16 h-16 bg-vault-coral-100 dark:bg-vault-coral-800/20 rounded-xl -rotate-12 float-medium opacity-60" />
@@ -36,25 +36,25 @@ export function Hero() {
 
             {/* Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-display leading-tight mb-8 text-foreground animate-fade-in-up">
-              Turn client meetings into{' '}
-              <span className="text-gradient">exam-ready audit documentation</span>{' '}
-              — in minutes.
+              Find what needs attention.{' '}
+              <span className="text-gradient">Prove how it was handled.</span>
             </h1>
 
             {/* Subheadline */}
             <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed mb-10 max-w-xl mx-auto lg:mx-0 animate-fade-in-up animation-delay-100">
-              Upload recordings from Zoom, Teams, Google Meet, Webex, and more. Generate timestamped supervision notes with evidence links. 
-              Review, finalize, and export a defensible documentation pack.
+              ComplyVault sits above your existing archive to help identify activity that deserves attention, connect source evidence to supervisory decisions, and preserve how issues were reviewed and resolved. AI assists; your compliance team remains accountable.
             </p>
+
+            <p className="text-base font-medium text-foreground mb-8">Keep your archive. Add the layer that helps you supervise it.</p>
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12 animate-fade-in-up animation-delay-200">
-              <Button href="/sample-audit-pack" size="lg" className="group">
-                See a sample export pack
+              <Button href="#cta" size="lg" className="group">
+                Book a demo
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
-              <Button href="#cta" variant="outline" size="lg" className="group">
-                Book a demo
+              <Button href="/sample-audit-pack" variant="outline" size="lg" className="group">
+                See a sample evidence pack
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
@@ -71,7 +71,7 @@ export function Hero() {
               </div>
               <div className="flex items-center gap-2">
                 <Users className="w-5 h-5 text-vault-green-500 dark:text-vault-green-400" />
-                <span>CCO-only finalization</span>
+                <span>Three-layer human review</span>
               </div>
             </div>
 
@@ -79,12 +79,12 @@ export function Hero() {
             <div className="flex flex-wrap gap-4 justify-center lg:justify-start text-xs text-muted-foreground animate-fade-in-up animation-delay-400">
               <span className="flex items-center gap-1.5">
                 <Shield className="w-4 h-4 text-vault-green-500 dark:text-vault-green-400" />
-                Enterprise-grade encryption
+                AES-256 encryption at rest
               </span>
               <span className="text-muted-foreground/60">•</span>
               <span className="flex items-center gap-1.5">
                 <FileCheck className="w-4 h-4 text-vault-green-500 dark:text-vault-green-400" />
-                SOC 2 controls
+                SOC 2: Not started
               </span>
             </div>
           </div>
@@ -98,7 +98,7 @@ export function Hero() {
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <h3 className="text-lg font-semibold text-card-foreground">Review Queue</h3>
-                    <p className="text-sm text-muted-foreground">Client interaction records</p>
+                    <p className="text-sm text-muted-foreground">Illustrative workflow — fictional data</p>
                   </div>
                   <div className="flex items-center gap-2 px-3 py-1.5 bg-vault-green-500/10 dark:bg-vault-green-500/15 text-vault-green-600 dark:text-vault-green-400 rounded-full text-sm font-medium border border-vault-green-500/20">
                     <span className="w-2 h-2 bg-vault-green-500 rounded-full animate-pulse" />
@@ -117,8 +117,8 @@ export function Hero() {
                     <div className="text-xs text-muted-foreground">Drafts</div>
                   </div>
                   <div className="bg-muted dark:bg-white/5 rounded-xl p-4 text-center border border-transparent dark:border-white/5">
-                    <div className="text-2xl font-bold text-card-foreground">8m</div>
-                    <div className="text-xs text-muted-foreground">Avg. Review</div>
+                    <div className="text-2xl font-bold text-card-foreground">Linked</div>
+                    <div className="text-xs text-muted-foreground">Decision trail</div>
                   </div>
                 </div>
 
@@ -128,7 +128,7 @@ export function Hero() {
                     <FileCheck className="w-5 h-5 text-vault-green-500 dark:text-vault-green-400" />
                     <div className="flex-1">
                       <p className="text-sm font-medium text-card-foreground">Johnson Portfolio Review</p>
-                      <p className="text-xs text-muted-foreground">Finalized by Sarah (CCO)</p>
+                      <p className="text-xs text-muted-foreground">Adviser → Compliance Manager → CCO review</p>
                     </div>
                     <CheckCircle2 className="w-5 h-5 text-vault-green-500 dark:text-vault-green-400" />
                   </div>

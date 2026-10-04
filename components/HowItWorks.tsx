@@ -3,27 +3,10 @@
 import { Upload, Settings, Rocket, CheckCircle2, ArrowRight } from 'lucide-react'
 
 const steps = [
-  {
-    number: '01',
-    icon: Upload,
-    title: 'Upload Recording',
-    description: 'Upload your meeting recording from Zoom, Teams, Google Meet, Webex, or any platform. We support MP3, MP4, WAV, and M4A formats up to 500MB.',
-    details: ['Drag & drop upload', 'Multiple formats', 'Secure transfer'],
-  },
-  {
-    number: '02',
-    icon: Settings,
-    title: 'Review & Edit',
-    description: 'AI extracts key topics, decisions, and recommendations. Review the draft and make any edits needed.',
-    details: ['Speaker diarization', 'Topic extraction', 'Evidence timestamps'],
-  },
-  {
-    number: '03',
-    icon: Rocket,
-    title: 'Finalize & Export',
-    description: 'CCO finalizes the record. Export your audit pack as PDF, CSV, or ZIP with full evidence linking.',
-    details: ['CCO approval workflow', 'Audit-ready exports', 'Complete audit trail'],
-  },
+  { number: '01', icon: Upload, title: 'Identify', description: 'Keep your archive. Bring supported source material into the review workflow through Zoom or file upload.', details: ['Zoom + file upload', 'MP3, MP4, WAV, M4A', 'Source-linked attention'] },
+  { number: '02', icon: Settings, title: 'Review', description: 'Verify flagged activity against source evidence. AI assists with routing attention; people assess the context.', details: ['Evidence timestamps', 'Human verification', 'Review context'] },
+  { number: '03', icon: CheckCircle2, title: 'Decide', description: 'Document the supervisory decision and resolution through adviser, Compliance Manager, and CCO review where required by the firm.', details: ['Three-layer human review', 'Recorded decisions', 'Human accountability'] },
+  { number: '04', icon: Rocket, title: 'Preserve', description: 'Seal the evidence pack with RecordSeal and Object Lock WORM retention. Corrections create a successor without erasing the original.', details: ['Sealed evidence pack', 'RecordSeal', 'Supersession without erasure'] },
 ]
 
 export function HowItWorks() {
@@ -37,17 +20,16 @@ export function HowItWorks() {
             <span>Simple Workflow</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-display text-foreground mb-6">
-            Up and Running in{' '}
-            <span className="text-vault-coral-500 dark:text-vault-coral-400">3 Simple Steps</span>
+            From source evidence to{' '}
+            <span className="text-vault-coral-500 dark:text-vault-coral-400">a Preserved Decision Trail</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Getting started with Comply Vault is quick and painless. Upload a recording 
-            and have your audit pack ready in under 10 minutes.
+            Identify. Review. Decide. Preserve. Keep the source evidence connected to each supervisory decision and its resolution.
           </p>
         </div>
 
         {/* Steps */}
-        <div className="grid lg:grid-cols-3 gap-8 lg:gap-10">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
           {steps.map((step, index) => (
             <div key={index} className="relative group">
               {/* Card */}

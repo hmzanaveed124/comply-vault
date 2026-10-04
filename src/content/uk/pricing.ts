@@ -1,7 +1,7 @@
 export const ukPricingContent = {
   hero: {
-    title: 'Protect your practice. Stay exam-ready.',
-    description: 'Flexible plans for RIA firms of every size. No hidden fees.',
+    title: 'Explore supervisory evidence for your UK firm.',
+    description: 'UK/FCA is a secondary market under exploration. Confirm workflow scope and availability with us before selecting a plan.',
   },
   faqs: [
     {
@@ -10,7 +10,7 @@ export const ukPricingContent = {
     },
     {
       question: 'What\'s included in the Essentials plan?',
-      answer: 'The Essentials plan includes single-user access, 10 meeting uploads per month, evidence-linked notes, FCA review-ready documentation, PDF and CSV exports, and email support. Perfect for individual UK financial advisers.',
+      answer: 'The Essentials plan includes single-user access, 10 meeting uploads per month, evidence-linked notes, source-linked supervisory documentation, PDF and CSV exports, and email support. Perfect for individual UK financial advisers.',
     },
     {
       question: 'What\'s included in the Professional plan?',

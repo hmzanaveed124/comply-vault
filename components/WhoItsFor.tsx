@@ -3,33 +3,18 @@
 import { CheckCircle2, XCircle, Building2, Users, TrendingUp, Scale } from 'lucide-react'
 
 const bestFor = [
-  {
-    icon: Scale,
-    title: 'SEC-Registered RIAs',
-    description: '$100M+ AUM with federal registration requirements',
-  },
-  {
-    icon: Users,
-    title: 'CCO-Led Compliance Teams',
-    description: 'Dedicated compliance function (even if part-time)',
-  },
-  {
-    icon: Building2,
-    title: 'Regular Client Meetings',
-    description: 'Firms with ongoing advisory relationships to document',
-  },
-  {
-    icon: TrendingUp,
-    title: 'Growing RIAs',
-    description: 'Scaling compliance without adding headcount',
-  },
+  { icon: Scale, title: 'SEC- and state-registered RIAs', description: 'Qualify on supervisory workload and evidence fragmentation, rather than AUM or registration type.' },
+  { icon: Users, title: 'Lean compliance teams', description: 'A CCO, principal wearing the CCO hat, or COO with a named compliance owner and recurring manual review.' },
+  { icon: Building2, title: 'Firms with an existing archive', description: 'Retained digital communications, manual evidence assembly, and no desire for an archive migration.' },
+  { icon: TrendingUp, title: 'Outsourced CCOs and platform partners', description: 'Compliance consultants, RIA platforms, and TAMPs exploring a consistent evidence workflow across client firms.' },
 ]
 
 const notIdealFor = [
-  'Firms without advice conversations to document',
-  'State-registered only (no SEC filing requirements)',
-  'Teams without compliance concerns or supervision needs',
-  'Broker-dealers (FINRA vs RIA compliance workflows)',
+  'No meaningful supervisory review volume or retained digital communications',
+  'Buyer wants only an archive or archive replacement',
+  'No named compliance owner',
+  'Broker-dealer surveillance is the primary need',
+  'Buyer requires autonomous compliance decisions',
 ]
 
 export function WhoItsFor() {
@@ -105,7 +90,7 @@ export function WhoItsFor() {
 
             <div className="mt-8 pt-6 border-t border-border dark:border-white/10">
               <p className="text-sm text-muted-foreground">
-                <strong className="text-card-foreground">Not sure?</strong> Book a quick call and we'll help you 
+                <strong className="text-card-foreground">Not sure?</strong> Book a quick call and we'll help you
                 determine if Comply Vault is the right fit for your firm's specific situation.
               </p>
             </div>

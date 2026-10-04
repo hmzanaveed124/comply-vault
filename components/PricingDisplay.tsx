@@ -13,7 +13,7 @@ interface PricingDisplayProps {
 
 export function PricingDisplay({ plan, currency, market = 'us', isDetecting = false }: PricingDisplayProps) {
   const demoLink = getDemoLink(market)
-  const contactLink = market === 'uk' ? '/uk/contact' : '/contact'
+  const contactLink = '/contact'
 
   const prices: Record<'essentials' | 'professional', Record<'gbp' | 'usd', string>> = {
     essentials: { gbp: '£249', usd: '$299' },

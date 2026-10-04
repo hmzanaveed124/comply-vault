@@ -76,7 +76,7 @@ const sections = [
     content: [
       {
         subtitle: 'Retention Period',
-        text: 'We retain your data for as long as your account is active or as needed to provide services. Meeting records are retained per your workspace settings (default 6 years for SEC compliance). Anonymous assessment analytics and optional review requests are retained as needed for sales follow-up and product improvement, and can be deleted on request where legally permitted.',
+        text: 'We retain your data for as long as your account is active or as needed to provide services. Meeting records are retained per your workspace settings (configured retention period; firms remain responsible for their obligations). Anonymous assessment analytics and optional review requests are retained as needed for sales follow-up and product improvement, and can be deleted on request where legally permitted.',
       },
       {
         subtitle: 'Deletion Requests',
@@ -92,7 +92,7 @@ export default function PrivacyPage() {
       {/* Header */}
       <div className="bg-gradient-to-br from-vault-green-900 via-vault-green-800 to-vault-green-900 py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Link 
+          <Link
             href="/"
             className="inline-flex items-center gap-2 text-white/70 hover:text-white mb-8 transition-colors"
           >
@@ -118,9 +118,9 @@ export default function PrivacyPage() {
         {/* Introduction */}
         <div className="prose prose-lg dark:prose-invert max-w-none mb-16">
           <p className="text-muted-foreground text-lg leading-relaxed">
-            At COMPLY VAULT LTD (Company No. 16889706), we take your privacy seriously. This Privacy Policy explains how we collect, 
-            use, disclose, and safeguard your information when you use our compliance documentation platform. 
-            We are committed to protecting the confidentiality of your data, especially given the sensitive 
+            At COMPLY VAULT LTD (Company No. 16889706), we take your privacy seriously. This Privacy Policy explains how we collect,
+            use, disclose, and safeguard your information when you use our compliance documentation platform.
+            We are committed to protecting the confidentiality of your data, especially given the sensitive
             nature of financial compliance records.
           </p>
         </div>
@@ -182,8 +182,8 @@ export default function PrivacyPage() {
           <div>
             <h2 className="text-2xl font-bold text-foreground mb-4">Changes to This Policy</h2>
             <p className="text-muted-foreground leading-relaxed">
-              We may update this Privacy Policy from time to time. We will notify you of any material changes 
-              by posting the new Privacy Policy on this page and updating the "Last updated" date. We encourage 
+              We may update this Privacy Policy from time to time. We will notify you of any material changes
+              by posting the new Privacy Policy on this page and updating the "Last updated" date. We encourage
               you to review this Privacy Policy periodically.
             </p>
           </div>
@@ -199,8 +199,8 @@ export default function PrivacyPage() {
                 <p className="text-muted-foreground mb-4">
                   If you have any questions about this Privacy Policy or our data practices, please contact us:
                 </p>
-                <a 
-                  href="mailto:privacy@complyvault.co" 
+                <a
+                  href="mailto:privacy@complyvault.co"
                   className="text-vault-green-500 hover:text-vault-green-400 font-medium"
                 >
                   privacy@complyvault.co
