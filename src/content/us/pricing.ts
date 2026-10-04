@@ -1,7 +1,7 @@
 export const usPricingContent = {
   hero: {
-    title: 'Protect your practice. Stay exam-ready.',
-    description: 'Flexible plans for RIA firms of every size. No hidden fees.',
+    title: 'Add supervisory evidence above your archive.',
+    description: 'Essentials $299/month, Professional $799/month, and Enterprise custom. Choose for supervisory workload and review capacity, not AUM.',
   },
   faqs: [
     {
@@ -10,7 +10,7 @@ export const usPricingContent = {
     },
     {
       question: 'What\'s included in the Essentials plan?',
-      answer: 'The Essentials plan includes single-user access, 10 meeting uploads per month, evidence-linked notes, SEC-ready documentation, PDF and CSV exports, and email support. Perfect for individual RIA advisors.',
+      answer: 'The Essentials plan includes single-user access, 10 meeting uploads per month, evidence-linked notes, source-linked supervisory documentation, PDF and CSV exports, and email support. Perfect for individual RIA advisors.',
     },
     {
       question: 'What\'s included in the Professional plan?',

@@ -4,7 +4,6 @@ import {
   Hero,
   TrustedBy,
   PainPoints,
-  ROIStats,
   Outputs,
   Features,
   WhoItsFor,
@@ -34,7 +33,6 @@ export default function Home() {
       <Hero />
       <TrustedBy />
       <PainPoints />
-      <ROIStats />
       <Outputs />
       <Features />
       <WhoItsFor />

@@ -132,3 +132,9 @@ The marketing site (this repo) runs on port 3000, and the app runs on port 8888 
 ## 📝 License
 
 MIT
+
+## Marketing source of truth
+
+Read `docs/product-marketing-context.md` before changing public copy, SEO metadata, structured data, pricing descriptions, or sales material. The v3.1 context controls positioning, audience, terminology, human accountability, and claim boundaries. Treat hypotheses and modeled savings as assumptions; never publish them as customer results. Shared public FAQ answers live in `lib/marketing.ts` and are also used for solution-page structured data.
+
+Run `npm test`, `npx tsc --noEmit`, and `npm run build` before release. Tests guard against retired trust claims and verify explicit secondary-market routing. `/roi` redirects to the current capacity calculator, which labels its inputs and outputs as illustrative.

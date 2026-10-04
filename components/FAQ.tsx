@@ -1,53 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { usePathname } from 'next/navigation'
+import { marketing } from '@/lib/marketing'
 import { ChevronDown, HelpCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 export function FAQ() {
-  const pathname = usePathname()
-  const isUK = pathname?.startsWith('/uk') ?? false
-  
-  const faqs = [
-    {
-      question: 'What exactly does Comply Vault do?',
-      answer: 'Comply Vault turns your meeting recordings from Zoom, Teams, Google Meet, Webex, and other platforms into structured compliance documentation. You upload a recording, we transcribe it with timestamps and speaker labels, extract key information (topics, recommendations, disclosures, decisions, follow-ups), and let you review/edit before finalizing. You get a downloadable audit pack (PDF, CSV, TXT, ZIP) that you can file into your compliance system.',
-    },
-    {
-      question: 'What file formats can I upload?',
-      answer: 'We support MP3, MP4, WAV, and M4A files. These are standard formats from Zoom, Teams, Google Meet, Webex, and other meeting platforms. We recommend uploading the original recording for best transcription quality.',
-    },
-    {
-      question: 'What do I get when I export?',
-      answer: 'A complete audit pack containing: (1) PDF structured compliance note with topics, recommendations, disclosures, decisions, and follow-ups, (2) CSV evidence map linking each claim to timestamps, (3) CSV version history showing all edits, (4) TXT transcript with timestamps and speaker labels, (5) ZIP bundle with everything. You can also export individual files.',
-    },
-    {
-      question: 'How does the finalization workflow work?',
-      answer: isUK
-        ? 'Anyone in your workspace can upload recordings and edit draft records. But only users with supervisor or compliance officer roles can finalize a record. This ensures a clear compliance boundary—the supervisor reviews and approves before anything becomes an official record. All finalization is logged with who approved and when.'
-        : 'Anyone in your workspace can upload recordings and edit draft records. But only users with the CCO/Owner role can finalize a record. This ensures a clear compliance boundary—the CCO reviews and approves before anything becomes an official record. All finalization is logged with who approved and when.',
-    },
-    {
-      question: isUK ? 'Is this FCA compliant?' : 'Is this SEC compliant?',
-      answer: isUK
-        ? 'Comply Vault helps you create documentation that supports your FCA SYSC 9 supervision and monitoring workflows. We generate structured file notes with evidence linking and complete audit trails. However, we don\'t make compliance determinations or guarantee FCA compliance. You and your compliance team are responsible for ensuring your documentation meets your firm\'s requirements. Consult your compliance counsel for specific regulatory questions.'
-        : 'Comply Vault helps you create documentation that supports your books-and-records workflow. We generate structured records with evidence linking and complete audit trails. However, we don\'t make compliance determinations or guarantee SEC compliance. You and your CCO are responsible for ensuring your documentation meets your firm\'s requirements. Consult your compliance counsel for specific regulatory questions.',
-    },
-  {
-    question: 'How do you ensure the AI extraction is accurate?',
-    answer: 'Three ways: (1) Every extracted claim links to the exact transcript moment so you can verify, (2) We show confidence scores for extracted items, (3) You review and edit before finalizing—nothing becomes official until you approve it. We call this "human-in-the-loop" because your review is the final quality check.',
-  },
-  {
-    question: 'Where is my data stored?',
-    answer: 'All data is stored in US-based cloud infrastructure with AES-256 encryption at rest and TLS encryption in transit. Each workspace is completely isolated—there\'s no cross-tenant access possible. We maintain audit logs of all access to your data.',
-  },
-  {
-    question: 'Do you have SOC 2 certification?',
-    answer: 'We\'re actively working toward SOC 2 Type II certification. Currently, we have security-first architecture with encryption, role-based access, audit logging, and workspace isolation. Contact us for our current security documentation and subprocessor list.',
-  },
-]
-  
+  const faqs = marketing.faqs
+
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
   return (
@@ -81,6 +41,8 @@ export function FAQ() {
               )}
             >
               <button
+                aria-expanded={openIndex === index}
+                aria-controls={`faq-answer-${index}`}
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
                 className="w-full flex items-center justify-between p-6 text-left"
               >
@@ -96,6 +58,8 @@ export function FAQ() {
               </button>
 
               <div
+                id={`faq-answer-${index}`}
+                hidden={openIndex !== index}
                 className={cn(
                   'overflow-hidden transition-all duration-300',
                   openIndex === index ? 'max-h-96' : 'max-h-0'

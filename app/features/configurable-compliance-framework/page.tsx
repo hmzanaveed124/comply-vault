@@ -86,7 +86,7 @@ const configurationRows = [
   },
   {
     item: 'Jurisdiction',
-    example: 'SEC/state RIA framework first, FCA/Consumer Duty if required',
+    example: 'SEC/state RIA workflow first; confirm any secondary-market scope',
   },
   {
     item: 'Retention and export format',
@@ -141,7 +141,7 @@ export default function ConfigurableComplianceFrameworkPage(): JSX.Element {
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-display leading-tight mb-8 text-foreground">
               Built around your compliance framework,{' '}
-              <span className="text-gradient">not a generic AI summary</span>
+              <span className="text-gradient">with source-linked supervisory evidence</span>
             </h1>
 
             <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed mb-10 max-w-3xl mx-auto">
@@ -183,7 +183,7 @@ export default function ConfigurableComplianceFrameworkPage(): JSX.Element {
         <section className="max-w-3xl mx-auto text-center lg:text-left lg:mx-0 lg:max-w-none lg:grid lg:grid-cols-2 lg:gap-16 lg:items-start">
           <div>
             <h2 className="text-3xl sm:text-4xl font-bold font-display text-foreground mb-6">
-              The AI workflow is standard. The compliance framework is
+              The review workflow is structured. The compliance framework is
               configurable.
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed mb-10">

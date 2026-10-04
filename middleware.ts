@@ -16,57 +16,6 @@ const EXCLUDED_PATHS = [
     '/favicon.ico',
 ]
 
-// Marketing pages that can be redirected
-const MARKETING_PAGES = [
-    '/',
-    '/pricing',
-    '/ria-compliance-software',
-    '/fca-compliance-software',
-    '/about',
-    '/contact',
-    '/features',
-    '/sample-audit-pack',
-    '/privacy',
-    '/terms',
-]
-
-function getCountryFromHeaders(request: NextRequest): 'GB' | null {
-    const country = request.headers.get('x-vercel-ip-country') ||
-                    request.headers.get('cf-ipcountry') ||
-                    request.headers.get('x-country-code') ||
-                    request.headers.get('cloudfront-viewer-country') ||
-                    null
-    
-    // Log country detection for debugging
-    console.log('[Middleware] Country detection:', {
-        'x-vercel-ip-country': request.headers.get('x-vercel-ip-country'),
-        'cf-ipcountry': request.headers.get('cf-ipcountry'),
-        'x-country-code': request.headers.get('x-country-code'),
-        'cloudfront-viewer-country': request.headers.get('cloudfront-viewer-country'),
-        detected: country,
-        isUK: country === 'GB'
-    })
-    
-    return country === 'GB' ? 'GB' : null
-}
-
-function shouldRedirectToUK(pathname: string, country: 'GB' | null, marketOverride: string | null): boolean {
-    // Don't redirect if already on UK path
-    if (pathname.startsWith('/uk/')) return false
-    
-    // Don't redirect excluded paths
-    if (EXCLUDED_PATHS.some(path => pathname.startsWith(path))) return false
-    
-    // Don't redirect if explicitly set to US
-    if (marketOverride === 'us') return false
-    
-    // Only redirect marketing pages
-    if (!MARKETING_PAGES.includes(pathname)) return false
-    
-    // Redirect if UK detected or explicitly set to UK
-    return country === 'GB' || marketOverride === 'uk'
-}
-
 function getUKPath(pathname: string): string {
     if (pathname === '/') return '/uk'
     return `/uk${pathname}`
@@ -78,7 +27,7 @@ export function middleware(request: NextRequest) {
     // www → non-www redirect is handled by Vercel Domains (Settings → Domains → set complyvault.co as primary).
     // Do NOT add redirects here or in vercel.json — Vercel already redirects www→non-www when non-www is primary.
     // Adding our own caused ERR_TOO_MANY_REDIRECTS when Vercel had www as primary.
-    
+
     // 1) Block WP admin paths
     if (
         pathname === '/wp-admin' ||
@@ -91,66 +40,31 @@ export function middleware(request: NextRequest) {
         return res
     }
 
-    // 2) Handle market override via query param (?market=uk or ?market=us)
+    // US RIA positioning is the default. UK pages are available through explicit selection.
     const marketParam = searchParams.get('market')
-    
-    if (marketParam === 'uk' || marketParam === 'us') {
-        const url = request.nextUrl.clone()
-        const response = NextResponse.next()
-        
-        // Set cookie for override
-        response.cookies.set('cv_market', marketParam, {
-            maxAge: 90 * 24 * 60 * 60, // 90 days
-            path: '/',
-            sameSite: 'lax',
-        })
-        
-        // Handle redirects based on market param
-        if (marketParam === 'uk') {
-            // Redirect to UK path if not already there
-            if (!pathname.startsWith('/uk/') && MARKETING_PAGES.includes(pathname)) {
-                url.pathname = getUKPath(pathname)
-                url.searchParams.delete('market')
-                return NextResponse.redirect(url)
-            }
-        } else if (marketParam === 'us') {
-            // Redirect to US path if on UK path
-            if (pathname.startsWith('/uk/')) {
-                url.pathname = pathname.replace('/uk', '') || '/'
-                url.searchParams.delete('market')
-                return NextResponse.redirect(url)
-            }
-        }
-        
-        // Remove market param from URL if no redirect needed
-        if (url.searchParams.has('market')) {
-            url.searchParams.delete('market')
-            return NextResponse.redirect(url)
-        }
-        
-        return response
+    const marketCookie = request.cookies.get('cv_market')?.value
+    const explicitMarket = marketParam === 'uk' || marketParam === 'us' ? marketParam : null
+    const market = explicitMarket ?? marketCookie
+    const isUKPath = pathname === '/uk' || pathname.startsWith('/uk/')
+    // Only route to UK pages that actually exist; never create /uk/about, /uk/features, etc.
+    const ukRoutes: Record<string, string> = {
+        '/': '/uk',
+        '/pricing': '/uk/pricing',
+        '/ria-compliance-software': '/uk/fca-compliance-software',
+        '/fca-compliance-software': '/uk/fca-compliance-software',
     }
-    
-    // 3) Check for existing market cookie
-    const marketCookie = request.cookies.get('cv_market')?.value || null
-    
-    // 4) Geo-based redirect logic (only for marketing pages)
-    if (request.method === 'GET' && !pathname.startsWith('/uk/')) {
-        const country = getCountryFromHeaders(request)
-        
-        console.log('[Middleware] Routing decision:', {
-            pathname,
-            country,
-            marketCookie,
-            shouldRedirect: shouldRedirectToUK(pathname, country, marketCookie)
-        })
-        
-        if (shouldRedirectToUK(pathname, country, marketCookie)) {
-            const ukPath = getUKPath(pathname)
-            const url = request.nextUrl.clone()
-            url.pathname = ukPath
-            console.log('[Middleware] Redirecting UK user:', { from: pathname, to: ukPath })
-            return NextResponse.redirect(url)
+    if (request.method === 'GET' && !EXCLUDED_PATHS.some(path => pathname.startsWith(path))) {
+        const url = request.nextUrl.clone()
+        if (market === 'uk' && !isUKPath && ukRoutes[pathname]) url.pathname = ukRoutes[pathname]
+        if (explicitMarket === 'us' && isUKPath) {
+            url.pathname = pathname === '/uk' ? '/' : pathname === '/uk/fca-compliance-software' ? '/ria-compliance-software' : pathname.slice(3)
+        }
+        if (explicitMarket) url.searchParams.delete('market')
+        if (url.toString() !== request.nextUrl.toString()) {
+            const response = NextResponse.redirect(url)
+            if (explicitMarket) response.cookies.set('cv_market', explicitMarket, { maxAge: 90 * 24 * 60 * 60, path: '/', sameSite: 'lax' })
+            response.headers.set('x-mw-ran', '1')
+            return response
         }
     }
 
@@ -183,6 +97,7 @@ export function middleware(request: NextRequest) {
 
     // ✅ Always stamp header on normal pass-through
     const res = NextResponse.next()
+    if (explicitMarket) res.cookies.set('cv_market', explicitMarket, { maxAge: 90 * 24 * 60 * 60, path: '/', sameSite: 'lax' })
     res.headers.set('x-mw-ran', '1')
     return res
 }

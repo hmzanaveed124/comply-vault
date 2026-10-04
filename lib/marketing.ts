@@ -1,0 +1,17 @@
+// Public product claims supplied by the canonical v3.1 marketing context.
+// Targets, modeled savings, and unapproved customer evidence are not product results.
+export const marketing = {
+  category: 'Supervisory evidence layer for RIAs',
+  description: 'ComplyVault sits above your existing archive to help identify activity that deserves attention, connect source evidence to supervisory decisions, and preserve how issues were reviewed and resolved. AI assists; humans remain accountable.',
+  faqs: [
+    { question: 'What does ComplyVault do?', answer: 'ComplyVault is a supervisory evidence layer for RIAs. It sits above your existing archive, helps identify what deserves attention, links source evidence to supervisory decisions, and preserves how issues were reviewed and resolved.' },
+    { question: 'Does this replace our archive?', answer: 'Keep your existing archive and retention systems. ComplyVault adds supervisory review and evidence preservation above that stack. It is not an archive replacement, and positioning above an archive does not imply a native connector to every archive vendor.' },
+    { question: 'Which integrations and uploads are supported?', answer: 'Zoom and file upload are supported for recording intake. Upload MP3, MP4, WAV, or M4A files. Teams, Google Meet, and Webex are not native integrations; a supported recording exported from another tool can be uploaded as a file.' },
+    { question: 'How does human review work?', answer: 'Adviser, Compliance Manager, and CCO review gates support three-layer human review where required by the firm. Reviewers verify source evidence, record supervisory decisions, and document resolution. AI assists with attention and review; it does not make autonomous compliance decisions.' },
+    { question: 'What is preserved in an evidence pack?', answer: 'A sealed evidence pack preserves source-linked documentation and the supervisory decision trail. Object Lock WORM retention protects sealed packs, and RecordSeal preserves custody. Corrections use supersession without erasing the original. The downloadable sample is illustrative, uses fictional data, and is not customer proof or a demonstration of live custody.' },
+    { question: 'Who is a good fit?', answer: 'SEC- and state-registered RIAs with recurring supervisory review, retained digital communications, meaningful manual evidence assembly, and a named compliance owner. Qualify on workload and evidence fragmentation rather than AUM. Outsourced CCOs, consultants, and platform partners can also explore client-firm workflows.' },
+    { question: 'Does using ComplyVault guarantee compliance or exam readiness?', answer: 'No. ComplyVault supports supervisory review and evidence organization. It does not guarantee regulatory compliance, examination outcomes, or satisfaction of a specific rule by itself. The firm remains responsible for its obligations and supervisory decisions.' },
+    { question: 'Where is data stored?', answer: 'US-based cloud infrastructure uses AES-256 encryption at rest, TLS in transit, role-based access controls, workspace isolation, and audit logging. Contact us for the current security documentation and subprocessor list.' },
+    { question: 'What is your SOC 2 status?', answer: 'SOC 2: Not started. Object Lock WORM retention for sealed evidence packs, encryption, role-based access, workspace isolation, and audit logging are implemented. These controls are not SOC 2 certification.' },
+  ],
+} as const

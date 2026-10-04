@@ -26,10 +26,10 @@ const outputs = [
   },
   {
     icon: Archive,
-    title: 'Complete Audit Pack',
+    title: 'Sealed Evidence Pack',
     formats: ['ZIP'],
-    description: 'All files bundled: PDF note, CSV evidence map, CSV version history, TXT transcript, interaction log.',
-    features: ['One-click download', 'Exam-ready format', 'Complete bundle'],
+    description: 'Bundle source-linked documentation and the decision trail. Object Lock protects sealed packs; RecordSeal preserves custody and supersession.',
+    features: ['One-click download', 'Retrievable evidence', 'Complete bundle'],
   },
 ]
 
@@ -44,12 +44,11 @@ export function Outputs() {
             <span>What You Get</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-display text-foreground mb-6">
-            Exam-Ready Export Pack,{' '}
-            <span className="text-gradient">One Click</span>
+            Preserved Supervisory Evidence,{' '}
+            <span className="text-gradient">Source to Decision</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Every finalized meeting generates a complete documentation bundle 
-            you can file directly into your compliance system.
+            Preserve source evidence, review context, supervisory decisions, and resolution in a sealed evidence pack alongside your existing retention systems.
           </p>
         </div>
 
@@ -109,7 +108,7 @@ export function Outputs() {
         {/* Supported File Types Note */}
         <div className="mt-12 text-center">
           <p className="text-sm text-muted-foreground mb-4">
-            <strong>Supported uploads:</strong> MP3, MP4, WAV, M4A (from Zoom, Teams, Google Meet, Webex, and more)
+            <strong>Supported uploads:</strong> MP3, MP4, WAV, M4A via file upload; Zoom is supported. Other platforms are not native integrations.
           </p>
         </div>
 

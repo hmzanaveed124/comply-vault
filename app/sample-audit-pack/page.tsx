@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import { Navigation, Footer } from '@/components'
 import { Button } from '@/components/Button'
-import { 
-  ArrowRight, 
-  FileText, 
+import {
+  ArrowRight,
+  FileText,
   Download,
   FileCheck,
   Link2,
@@ -15,7 +15,7 @@ import { SITE_URL } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: 'Sample Audit Pack | Comply Vault',
-  description: 'See a real example of Comply Vault\'s SEC exam-ready audit pack including structured compliance notes, evidence maps, version history, and full transcripts.',
+  description: 'Explore an illustrative ComplyVault evidence pack with fictional data including structured compliance notes, evidence maps, version history, and full transcripts.',
   keywords: ['audit pack example', 'compliance documentation sample', 'RIA audit trail', 'SEC exam documentation'],
   authors: [{ name: 'Comply Vault' }],
   alternates: {
@@ -36,7 +36,7 @@ export default function SampleAuditPackPage() {
       <section className="relative min-h-[60vh] pt-28 pb-20 overflow-hidden noise-texture">
         <div className="absolute inset-0 bg-grid opacity-50" />
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-radial from-vault-green-500/10 via-transparent to-transparent" />
-        
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-4 py-2 rounded-full text-sm font-medium mb-8 border border-primary/20">
@@ -49,8 +49,8 @@ export default function SampleAuditPackPage() {
             </h1>
 
             <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed mb-6 max-w-3xl mx-auto">
-              See exactly what ComplyVault produces from a single client meeting recording. This is an illustrative sample 
-              with fictional data — showing the precise format, structure, and output you get from day one.
+              See exactly what ComplyVault produces from a single client meeting recording. This is an illustrative sample
+              with fictional data. It illustrates documentation formats, not a validated customer outcome or live RecordSeal/Object Lock custody.
             </p>
 
             <ul className="text-left text-muted-foreground space-y-2 max-w-2xl mx-auto mb-10">
@@ -79,7 +79,7 @@ export default function SampleAuditPackPage() {
               What's Included in an <span className="text-vault-green-500">Audit Pack</span>
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Designed to support RIA supervision and exam documentation workflows — everything an SEC or state examiner typically asks for.
+              Designed to support RIA supervision and exam documentation workflows — source-linked documentation that helps reviewers reconstruct the supervisory decision trail.
             </p>
           </div>
 
@@ -153,10 +153,10 @@ export default function SampleAuditPackPage() {
                 Download Sample Audit Pack
               </h2>
               <p className="text-muted-foreground mb-8">
-                An illustrative sample showing the structure and format of a complete audit pack. 
+                An illustrative sample showing the structure and format of a complete audit pack.
                 All figures, names, and client details are entirely fictional.
               </p>
-              
+
               <div className="flex flex-col items-center">
                 <Button href="/downloads/ComplyVault_Sample_Audit_Pack.zip" size="lg" className="group">
                   <Download className="w-5 h-5 mr-2" />
@@ -172,14 +172,14 @@ export default function SampleAuditPackPage() {
 
               <div className="mt-8 text-center space-y-2">
                 <p className="text-foreground">
-                  Upload a recording → get this output in minutes.
+                  Source evidence → human review → supervisory decision → preserved evidence.
                 </p>
                 <p className="text-muted-foreground">
                   Want a sample pack from your own anonymised transcript?{' '}
                   <a href="/#cta" className="text-vault-green-500 hover:underline font-medium">
                     Book a demo
                   </a>
-                  {' '}and we&apos;ll generate one for you in 24 hours.
+                  {' '}and we&apos;ll discuss the appropriate sample workflow.
                 </p>
               </div>
 
@@ -212,12 +212,12 @@ export default function SampleAuditPackPage() {
               Ready to Create Your Own Audit Packs?
             </h2>
             <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Schedule a demo and we'll show you how to turn your meeting recordings into exam-ready documentation
+              Schedule a demo and we'll show you how to link source evidence to human review and supervisory decisions
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                href="/#cta" 
-                size="lg" 
+              <Button
+                href="/#cta"
+                size="lg"
                 className="group"
                 eventName="book_demo_click"
                 eventParams={{ location: 'sample_audit_pack_page' }}

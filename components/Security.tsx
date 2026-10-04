@@ -4,14 +4,16 @@ import { Shield, Lock, Eye, Server, CheckCircle2, Clock } from 'lucide-react'
 
 const currentFeatures = [
   { name: 'AES-256 Encryption', description: 'Data encrypted at rest and in transit' },
-  { name: 'Role-Based Access', description: 'CCO-only finalization workflow' },
-  { name: 'Audit Trail', description: 'Complete interaction logging' },
+  { name: 'Role-Based Access', description: 'Role-gated human review' },
+  { name: 'Audit Trail', description: 'Review and decision logging' },
+  { name: 'Object Lock WORM', description: 'Implemented for sealed evidence packs' },
+  { name: 'RecordSeal', description: 'Seal custody and supersession without erasure' },
   { name: 'Workspace Isolation', description: 'Strict tenant separation' },
 ]
 
 const roadmapFeatures = [
-  { name: 'SOC 2 Type II', status: 'In Progress' },
-  { name: 'WORM Retention', status: 'Planned' },
+  { name: 'SOC 2 Type II', status: 'Not started' },
+
 ]
 
 const securityFeatures = [
@@ -23,12 +25,12 @@ const securityFeatures = [
   {
     icon: Eye,
     title: 'Role-Based Access Control',
-    description: 'Only CCO/Owner roles can finalize records. Members can upload and edit drafts.',
+    description: 'Adviser, Compliance Manager, and CCO review gates where required by the firm.',
   },
   {
     icon: Server,
     title: 'Workspace Isolation',
-    description: 'Each firm\'s data is completely isolated. No cross-tenant access possible.',
+    description: 'Workspace isolation and access controls separate each firm\'s data.',
   },
 ]
 
@@ -39,7 +41,7 @@ export function Security() {
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0 bg-grid" style={{ backgroundSize: '40px 40px' }} />
       </div>
-      
+
       {/* Glow Effects */}
       <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-vault-green-500/10 rounded-full blur-3xl" />
       <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-vault-coral-500/5 rounded-full blur-3xl" />
@@ -62,7 +64,7 @@ export function Security() {
 
             {/* Description */}
             <p className="text-lg text-gray-300 leading-relaxed mb-10">
-              Client meeting recordings contain sensitive information. We've built 
+              Client meeting recordings contain sensitive information. We've built
               Comply Vault with security as a foundation, not an afterthought.
             </p>
 
@@ -119,7 +121,7 @@ export function Security() {
               {/* Roadmap */}
               <div>
                 <h4 className="text-sm font-medium text-gray-400 uppercase tracking-wider mb-4">
-                  On Our Roadmap
+                  Certification Status
                 </h4>
                 <div className="space-y-3">
                   {roadmapFeatures.map((feature, index) => (
@@ -142,18 +144,18 @@ export function Security() {
               {/* Transparency Note */}
               <div className="mt-8 pt-6 border-t border-gray-700/50 dark:border-white/10">
                 <p className="text-sm text-gray-400 leading-relaxed">
-                  We're actively working toward SOC 2 Type II certification. 
+                  SOC 2 has not been started. Object Lock WORM retention is implemented for sealed evidence packs.
                   Contact us for our current security documentation and subprocessor list.
                 </p>
                 <a
-                  href="#"
+                  href="/contact"
                   className="inline-flex items-center gap-2 text-vault-green-400 font-medium mt-4 hover:text-vault-green-300 transition-colors text-sm"
                 >
                   Request Security Documentation
                   <Shield className="w-4 h-4" />
                 </a>
                 <p className="text-sm text-gray-400 leading-relaxed mt-4">
-                  Also supports UK FCA supervision workflows.
+                  Designed for US RIA supervisory workflows. Firms remain responsible for their compliance obligations.
                 </p>
               </div>
             </div>

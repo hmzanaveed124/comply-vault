@@ -3,26 +3,10 @@
 import { Mic, Clock, FileCheck, Link2 } from 'lucide-react'
 
 const benefits = [
-  {
-    icon: Mic,
-    title: 'AI Transcription',
-    description: 'Upload your meeting recording from any platform and get a complete, speaker-diarized transcript in minutes.',
-  },
-  {
-    icon: Clock,
-    title: 'Under 10 Minutes',
-    description: 'Review AI-extracted key points, edit if needed, and finalize. Fast, accurate documentation.',
-  },
-  {
-    icon: FileCheck,
-    title: 'Structured Output',
-    description: 'Every meeting produces the same professional format. Consistent across your entire team.',
-  },
-  {
-    icon: Link2,
-    title: 'Evidence Linking',
-    description: 'Every claim in your notes links back to the exact transcript moment. Audit-ready by default.',
-  },
+  { icon: Mic, title: 'Retained records', description: 'Your archive keeps the source records. Keep that retention system in place.' },
+  { icon: Clock, title: 'Recurring review', description: 'Lean teams still need to identify activity that deserves supervisory attention.' },
+  { icon: FileCheck, title: 'Documented decisions', description: 'Record what was reviewed, what was decided, and how the issue was resolved.' },
+  { icon: Link2, title: 'Preserved evidence', description: 'Connect the decision trail to source evidence instead of rebuilding it later.' },
 ]
 
 export function PainPoints() {
@@ -32,12 +16,11 @@ export function PainPoints() {
         {/* Section Header */}
         <div className="text-center mb-20">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-display text-foreground mb-6">
-            From Meeting to{' '}
-            <span className="text-vault-green-600 dark:text-vault-green-400">Audit Pack</span>
+            Move beyond{' '}
+            <span className="text-vault-green-600 dark:text-vault-green-400">Supervision by Reconstruction</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Client meeting documentation shouldn't take longer than the meeting itself. 
-            Let AI do the heavy lifting.
+            Retaining a record is only part of the story. When evidence lives across your archive, inbox, notes, and spreadsheets, people still have to reconstruct what happened and how it was handled.
           </p>
         </div>
 

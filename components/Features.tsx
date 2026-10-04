@@ -1,52 +1,22 @@
 'use client'
 
-import { 
-  Mic, 
-  Brain, 
-  Link2, 
-  Edit3, 
-  UserCheck, 
+import {
+  Mic,
+  Brain,
+  Link2,
+  Edit3,
+  UserCheck,
   History,
-  ArrowRight 
+  ArrowRight
 } from 'lucide-react'
 
 const features = [
-  {
-    icon: Mic,
-    title: 'Smart Transcription',
-    description: 'Upload meeting recordings from Zoom, Teams, Google Meet, Webex, and more (MP3, MP4, WAV, M4A) and get speaker-diarized transcripts with precise timestamps.',
-    color: 'green',
-  },
-  {
-    icon: Brain,
-    title: 'AI Extraction',
-    description: 'Automatically identify topics discussed, recommendations made, disclosures, decisions, and follow-up items.',
-    color: 'coral',
-  },
-  {
-    icon: Link2,
-    title: 'Evidence Linking',
-    description: 'Every extracted claim links to the exact transcript moment with timestamp and snippet. Click to verify.',
-    color: 'green',
-  },
-  {
-    icon: Edit3,
-    title: 'Review Workflow',
-    description: 'Edit extracted fields before finalizing. Add context, correct errors, and ensure accuracy with your review.',
-    color: 'coral',
-  },
-  {
-    icon: UserCheck,
-    title: 'CCO-Only Finalization',
-    description: 'Role-gated workflow ensures only CCO/Owner can finalize records. Members can upload and edit drafts.',
-    color: 'green',
-  },
-  {
-    icon: History,
-    title: 'Complete Audit Trail',
-    description: 'Every action logged: who uploaded, who edited what, who finalized, when. Full version history included.',
-    color: 'coral',
-  },
+  { icon: Brain, title: 'Route Supervisory Attention', description: 'Help identify activity that deserves review. AI routes attention and assists review; humans make supervisory decisions.', color: 'green' },
+  { icon: Mic, title: 'Supported Source Intake', description: 'Zoom and MP3, MP4, WAV, or M4A file uploads support the recording workflow. Other meeting platforms are not native integrations.', color: 'coral' },
+  { icon: Link2, title: 'Source-Linked Evidence', description: 'Connect review findings to source material, with timestamps and transcript snippets for recording evidence.', color: 'green' },
+  { icon: Edit3, title: 'Documented Decisions', description: 'Preserve review context, supervisory decisions, and resolution alongside the source evidence.', color: 'coral' },
+  { icon: UserCheck, title: 'Three-Layer Human Review', description: 'Adviser, Compliance Manager, and CCO review gates where the firm requires them. Humans remain accountable.', color: 'green' },
+  { icon: History, title: 'Sealed Evidence Packs', description: 'Object Lock WORM retention and RecordSeal preserve sealed packs. Supersession records corrections without erasing the original.', color: 'coral' },
 ]
 
 export function Features() {
@@ -69,8 +39,7 @@ export function Features() {
             <span className="text-gradient">Actually Does</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Upload meeting recordings, get structured documentation with evidence linking. 
-            Review, finalize, and export.
+            A supervisory evidence layer above your existing archive: source evidence → attention → review → decision → resolution → sealed pack.
           </p>
         </div>
 
@@ -83,8 +52,8 @@ export function Features() {
             >
               {/* Icon */}
               <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-8 transition-all duration-300 ${
-                feature.color === 'green' 
-                  ? 'bg-vault-green-100 dark:bg-vault-green-800/30 group-hover:bg-vault-green-500' 
+                feature.color === 'green'
+                  ? 'bg-vault-green-100 dark:bg-vault-green-800/30 group-hover:bg-vault-green-500'
                   : 'bg-vault-coral-100 dark:bg-vault-coral-800/30 group-hover:bg-vault-coral-500'
               }`}>
                 <feature.icon className={`w-8 h-8 transition-colors duration-300 ${
@@ -108,8 +77,8 @@ export function Features() {
         {/* Note about what this ISN'T */}
         <div className="mt-16 text-center">
           <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
-            <strong>Note:</strong> Comply Vault helps you create exam-ready documentation. 
-            It does not make compliance determinations or guarantee SEC compliance. 
+            <strong>Note:</strong> ComplyVault helps organize and retrieve supervisory evidence.
+            It does not make compliance determinations or guarantee SEC compliance.
             Always consult with your CCO.
           </p>
         </div>

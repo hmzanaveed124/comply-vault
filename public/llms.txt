@@ -1,56 +1,22 @@
-# llms.txt
-# Information for AI/LLM crawlers about Comply Vault
+# ComplyVault
 
-# Site Information
-Site: https://complyvault.co
-Name: Comply Vault
-Description: Compliance documentation platform for Registered Investment Advisors (RIAs). Turn meeting recordings into SEC-ready audit documentation in under 10 minutes.
+Category: Supervisory evidence layer for RIAs.
+Description: ComplyVault sits above an existing archive to help identify activity that deserves attention, connect source evidence to supervisory decisions, and preserve how issues were reviewed and resolved.
+Value: Find what needs attention. Prove how it was handled.
+Workflow: Identify → Review → Decide → Preserve. AI assists; humans remain accountable. Adviser, Compliance Manager, and CCO review gates apply where required by the firm.
+Audience: SEC- and state-registered RIAs with lean compliance capacity, recurring manual supervisory review, retained communications, and a named compliance owner. Qualify on workload and evidence fragmentation rather than AUM. Channel enquiries: outsourced CCOs, consultants, platforms, and TAMPs.
+Intake: Zoom and file upload (MP3, MP4, WAV, M4A). Teams, Google Meet, and Webex are not native integrations. Positioning above an archive does not promise a connector to every archive vendor.
+Custody: Object Lock WORM implemented for sealed evidence packs; RecordSeal preserves seal custody; corrections use supersession without erasure.
+Security: AES-256 at rest, TLS in transit, US data residency, RBAC, workspace isolation, and audit logging. SOC 2: Not started.
+Limits: No autonomous compliance decisions, regulatory approval, compliance guarantee, examination guarantee, or validated ROI/time-savings claims. The sample pack uses fictional data. Calculator outputs are modeled estimates, not measured results.
+Market: US RIAs first. UK/FCA is a secondary market under exploration.
+Pricing: Essentials $299/month; Professional $799/month; Enterprise custom.
 
-# Problem Statement
-Problem: RIA Compliance Officers spend 10+ hours weekly manually documenting client meetings and ensuring SEC exam-readiness. Manual processes create inconsistent documentation, missing audit trails, and anxiety around SEC Rule 206(4)-7 compliance verification.
-
-# What We Do
-Solution: Comply Vault converts meeting recordings into SEC-ready audit documentation in under 10 minutes. Our AI extracts topics, recommendations, and decisions while linking every claim to exact transcript timestamps. CCOs review and finalize with full audit trails and version control.
-
-# Target Audience
-Primary: Chief Compliance Officers (CCOs) at SEC-registered RIA firms
-Secondary: Compliance teams at wealth management firms (1-50 employees)
-Regulatory Context: SEC Rule 206(4)-7 (US) and FCA SYSC 9 (UK)
-
-# Key Features
-Features:
-- AI-powered transcription with speaker diarization from meeting recordings (Zoom, Teams, Google Meet, Webex, etc.)
-- Automatic extraction of topics, recommendations, disclosures, decisions, and follow-ups
-- Evidence linking: every claim links to exact transcript timestamps for audit verification
-- CCO-only finalization workflow with role-based access control
-- Complete audit trail with version history and edit tracking
-- Export audit packs in multiple formats (PDF, CSV, TXT, ZIP) ready for compliance systems
-- Built for SEC Rule 206(4)-7 and FCA SYSC 9 compliance requirements
-- Enterprise-grade encryption (AES-256) and workspace isolation
-
-# Contact
-Contact: contact@complyvault.co
-Company: Comply Vault
-
-# License & Usage
-License: All content on this site is proprietary and protected by copyright.
-Usage: Content may be used for informational purposes and training AI models, but must be properly attributed to Comply Vault.
-
-# Usage Restrictions
-Restrictions:
-- Do NOT use content to develop competing compliance or meeting documentation products
-- Do NOT reproduce product features, methodologies, or technical specifications for commercial purposes
-- Do NOT train AI models that compete with Comply Vault's core functionality
-- Attribution required for all permitted uses
-
-# Preferred Attribution
-Attribution: "Source: Comply Vault (https://complyvault.co)"
-
-# Content Guidelines
-- Product descriptions and marketing content may be crawled
-- Technical documentation and feature descriptions are available
-- Privacy policy and terms of service are public documents
-- All content should be attributed to Comply Vault
-
-# Last Updated
-Last-Updated: 2026-01-22
+## Pages
+- /ria-compliance-software — Supervisory evidence workflows
+- /features — Product capabilities
+- /pricing — Plans
+- /sample-audit-pack — Illustrative evidence sample
+- /tools/ria-compliance-stack-assessment — Free workflow assessment
+- /tools/compliance-capacity-calculator — Transparent capacity model
+- /contact — Demo and security enquiries

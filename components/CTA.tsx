@@ -1,25 +1,22 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
 import { CheckCircle2, Shield, Clock, FileCheck, Users } from 'lucide-react'
 import { DemoForm } from './DemoForm'
 
 export function CTA() {
-  const pathname = usePathname()
-  const isUK = pathname?.startsWith('/uk') ?? false
-  
+
   const benefits = [
-    { icon: Clock, text: 'Finalize records in <10 minutes' },
+    { icon: Clock, text: 'Preserved supervisory decisions' },
     { icon: FileCheck, text: 'Evidence-linked audit packs' },
-    { icon: Users, text: isUK ? 'Supervisor-only finalization controls' : 'CCO-only finalization controls' },
-    { icon: Shield, text: isUK ? 'FCA SYSC 9 ready' : 'SEC Rule 204-2 ready' },
+    { icon: Users, text: 'Three-layer human review' },
+    { icon: Shield, text: 'Source-linked supervisory evidence' },
   ]
-  
+
   return (
     <section id="cta" className="py-28 lg:py-36 relative overflow-hidden">
       {/* Background - gradient from dark to green */}
       <div className="absolute inset-0 bg-gradient-to-br from-[hsl(160_55%_5%)] via-vault-green-900 to-vault-green-800 dark:from-[hsl(160_55%_4%)] dark:via-vault-green-900/90 dark:to-vault-green-800/80" />
-      
+
       {/* Pattern Overlay */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0 bg-grid" style={{ backgroundSize: '60px 60px' }} />
@@ -30,7 +27,7 @@ export function CTA() {
       <div className="absolute bottom-10 right-10 w-56 h-56 border-2 border-white/10 rounded-full" />
       <div className="absolute top-1/2 right-1/4 w-5 h-5 bg-vault-coral-400 rounded-full animate-pulse" />
       <div className="absolute bottom-1/3 left-1/3 w-4 h-4 bg-white/40 rounded-full animate-pulse animation-delay-300" />
-      
+
       {/* Glow effects */}
       <div className="absolute top-1/3 left-1/4 w-[400px] h-[400px] bg-vault-green-500/15 rounded-full blur-3xl" />
       <div className="absolute bottom-1/4 right-1/3 w-[300px] h-[300px] bg-vault-coral-500/10 rounded-full blur-3xl" />
@@ -47,7 +44,7 @@ export function CTA() {
 
             {/* Description */}
             <p className="text-lg lg:text-xl text-white/85 mb-10 leading-relaxed">
-              See how ComplyVault turns meeting recordings into exam-ready audit packs in under 10 minutes. 
+              See how ComplyVault sits above your archive and connects source evidence to review, supervisory decisions, and sealed evidence packs.
               Get a personalized demo for your firm.
             </p>
 
@@ -66,7 +63,7 @@ export function CTA() {
             {/* Trust Badge */}
             <div className="flex items-center gap-3 text-white/60 text-sm justify-center lg:justify-start">
               <Shield className="w-5 h-5" />
-              <span>256-bit Encryption • SOC 2 Readiness • US-Based Storage</span>
+              <span>AES-256 at rest • Object Lock WORM for sealed packs • SOC 2: Not started</span>
             </div>
           </div>
 
