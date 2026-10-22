@@ -27,7 +27,7 @@ const firmSizes = [
 // For production, create a site at Cloudflare Turnstile dashboard
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'
 
-export function DemoForm() {
+export function DemoForm({ description = 'See how ComplyVault can transform your compliance workflow' }: { description?: string }) {
   const [formData, setFormData] = useState<FormData>({
     firstName: '',
     lastName: '',
@@ -145,7 +145,7 @@ export function DemoForm() {
     <form onSubmit={handleSubmit} className="bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/20">
       <div className="text-center mb-8">
         <h3 className="text-2xl font-bold text-white mb-2">Book a Demo</h3>
-        <p className="text-white/70">See how ComplyVault can transform your compliance workflow</p>
+        <p className="text-white/70">{description}</p>
       </div>
 
       <div className="space-y-5">
