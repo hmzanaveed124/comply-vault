@@ -68,8 +68,8 @@ const stages = [
 export function LifecycleHero() {
   return (
     <>
-      <section className="relative pt-44 pb-28 sm:pt-52 sm:pb-36 lg:pt-60 lg:pb-44 overflow-hidden">
-        <div className={`${container} text-center`}>
+      <section className="relative min-h-[100dvh] flex items-center pt-32 pb-24 overflow-hidden">
+        <div className={`${container} w-full text-center`}>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-medium font-display leading-tight tracking-tight text-foreground max-w-6xl mx-auto mb-12">
             <span className="sr-only">
               The context behind the advice. The record behind the decision.
