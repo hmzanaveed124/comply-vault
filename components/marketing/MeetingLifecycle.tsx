@@ -81,14 +81,13 @@ export function LifecycleHero() {
             For RIA advisors and oversight teams
           </p>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-display leading-tight text-foreground mb-6">
-            Better prepared conversations.
+            From client conversation
             <br />
-            <span className="text-gradient">Evidence you can trust.</span>
+            <span className="text-gradient">to a clear evidence trail.</span>
           </h1>
           <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-xl mb-8">
-            Bring clarity to the work around every client meeting. Review
-            source-linked notes and preserve the decisions behind your
-            follow-through.
+            Bring client context, meeting notes and follow-up together—with sources
+            linked, decisions recorded and your team in control of the review.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 mb-6">
             <Button href="#cta" size="lg">
