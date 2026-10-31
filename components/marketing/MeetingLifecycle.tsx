@@ -12,6 +12,7 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/Button'
 import { DemoForm } from '@/components/DemoForm'
+import styles from './HeadlineReveal.module.css'
 
 const container = 'relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'
 const card =
@@ -81,9 +82,26 @@ export function LifecycleHero() {
             For RIA advisors and oversight teams
           </p>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-display leading-tight text-foreground mb-6">
-            The context behind the advice.
-            <br />
-            <span className="text-gradient">The record behind the decision.</span>
+            <span className="sr-only">
+              The context behind the advice. The record behind the decision.
+            </span>
+            <span aria-hidden="true">
+              {['The', 'context', 'behind', 'the', 'advice.'].map((word, index) => (
+                <span key={index}>
+                  <span className={styles.word} style={{ animationDelay: `${200 + index * 110}ms` }}>{word}</span>
+                  {index < 4 ? ' ' : null}
+                </span>
+              ))}
+              <br />
+              <span className="text-primary">
+                {['The', 'record', 'behind', 'the', 'decision.'].map((word, index) => (
+                  <span key={index}>
+                    <span className={styles.word} style={{ animationDelay: `${750 + index * 110}ms` }}>{word}</span>
+                    {index < 4 ? ' ' : null}
+                  </span>
+                ))}
+              </span>
+            </span>
           </h1>
           <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-xl mb-8">
             Bring client context, meeting notes and follow-up together—with sources
