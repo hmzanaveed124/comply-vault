@@ -86,7 +86,7 @@ export function ViewCard({
 }: {
   role: string;
   title: string;
-  steps: { label: string; text: string; status: string }[];
+  steps: { label: string; text: string;  }[];
   pills: string[];
   id: string;
 }) {
@@ -102,7 +102,6 @@ export function ViewCard({
               <strong>{s.label}</strong>
               <p>{s.text}</p>
             </div>
-            <StatusPill>{s.status}</StatusPill>
           </div>
         ))}
       </div>
@@ -322,17 +321,14 @@ export function Homepage() {
                 {
                   label: "Prepare",
                   text: "A focused brief before the conversation.",
-                  status: "Coming soon",
                 },
                 {
                   label: "Meet",
                   text: "Capture the conversation with consent.",
-                  status: "Coming soon",
                 },
                 {
                   label: "Follow through",
                   text: "Review the draft note and next steps.",
-                  status: "Live",
                 },
               ]}
               pills={["Redtail CRM", "Source-linked notes", "Follow-up items"]}
@@ -345,17 +341,14 @@ export function Homepage() {
                 {
                   label: "Review & inspect",
                   text: "Prioritise records and open their evidence.",
-                  status: "Live",
                 },
                 {
                   label: "Sign off",
                   text: "Record the review decision and its context.",
-                  status: "Live",
                 },
                 {
                   label: "Export",
                   text: "Bring documentation and history together.",
-                  status: "Live",
                 },
               ]}
               pills={[
