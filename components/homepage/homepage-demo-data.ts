@@ -76,6 +76,8 @@ export const integrations = [
   "Zoom",
   "Microsoft Teams",
   "Redtail",
+  "Zoho One",
+  "Slant",
   "DocuSign",
 ];
 export const faq = [
