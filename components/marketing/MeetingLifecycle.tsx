@@ -81,9 +81,9 @@ export function LifecycleHero() {
             For RIA advisors and oversight teams
           </p>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-display leading-tight text-foreground mb-6">
-            From client conversation
+            The context behind the advice.
             <br />
-            <span className="text-gradient">to a clear evidence trail.</span>
+            <span className="text-gradient">The record behind the decision.</span>
           </h1>
           <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-xl mb-8">
             Bring client context, meeting notes and follow-up together—with sources
