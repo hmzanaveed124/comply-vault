@@ -67,21 +67,10 @@ const stages = [
 
 export function LifecycleHero() {
   return (
-    <section className="relative pt-36 pb-20 lg:pb-28 overflow-hidden noise-texture">
-      <div aria-hidden="true" className="absolute inset-0 bg-grid opacity-30" />
-      <div
-        aria-hidden="true"
-        className="absolute top-0 right-0 w-[700px] h-[700px] bg-gradient-radial from-vault-green-500/10 via-transparent to-transparent"
-      />
-      <div
-        className={`${container} grid lg:grid-cols-2 gap-12 lg:gap-20 items-center`}
-      >
-        <div>
-          <p className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-4 py-2 rounded-full text-sm font-medium mb-6 border border-primary/20">
-            <Users className="w-4 h-4" aria-hidden="true" />
-            For RIA advisors and oversight teams
-          </p>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-display leading-tight text-foreground mb-6">
+    <>
+      <section className="relative pt-44 pb-28 sm:pt-52 sm:pb-36 lg:pt-60 lg:pb-44 overflow-hidden">
+        <div className={`${container} text-center`}>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-medium font-display leading-tight tracking-tight text-foreground max-w-6xl mx-auto mb-12">
             <span className="sr-only">
               The context behind the advice. The record behind the decision.
             </span>
@@ -103,11 +92,8 @@ export function LifecycleHero() {
               </span>
             </span>
           </h1>
-          <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-xl mb-8">
-            Bring client context, meeting notes and follow-up together—with sources
-            linked, decisions recorded and your team in control of the review.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 mb-6">
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button href="#cta" size="lg">
               Book a demo
               <ArrowRight className="w-5 h-5 ml-2" aria-hidden="true" />
@@ -116,11 +102,10 @@ export function LifecycleHero() {
               Explore the workflow
             </Button>
           </div>
-          <p className="text-sm text-muted-foreground leading-relaxed max-w-lg">
-            Recording review and documentation are available today. Preparation
-            and live capture are product previews.
-          </p>
         </div>
+      </section>
+      <section aria-label="Client conversation workflow" className="pb-20 lg:pb-28">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-card rounded-3xl border border-border p-6 sm:p-8 shadow-2xl shadow-foreground/10 dark:shadow-black/30">
           <div className="flex items-center justify-between gap-4 border-b border-border pb-5 mb-6">
             <p className="font-semibold">One client conversation</p>
@@ -167,8 +152,14 @@ export function LifecycleHero() {
             <p>Find what needs attention. Prove how it was handled.</p>
           </div>
         </div>
-      </div>
-    </section>
+
+          <p className="mt-6 text-sm text-muted-foreground leading-relaxed text-center max-w-2xl mx-auto">
+            Recording review and documentation are available today. Preparation
+            and live capture are product previews.
+          </p>
+        </div>
+      </section>
+    </>
   )
 }
 
