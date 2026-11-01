@@ -70,16 +70,11 @@ export const demo = {
     { label: "Coverage", value: "3 records included · 1 source held" },
   ],
 };
-export const integrations = [
-  "Microsoft 365",
-  "Gmail",
-  "Zoom",
-  "Microsoft Teams",
-  "Redtail",
-  "Zoho One",
-  "Slant",
-  "DocuSign",
-];
+export const integrationGroups = [
+  { id: "email", label: "Email", names: ["Microsoft 365", "Gmail"] },
+  { id: "meetings", label: "Meetings", names: ["Zoom", "Microsoft Teams"] },
+  { id: "workflows", label: "CRM & workflows", names: ["Redtail", "Zoho One", "Slant", "DocuSign"] },
+] as const;
 export const faq = [
   [
     "What can I use today?",

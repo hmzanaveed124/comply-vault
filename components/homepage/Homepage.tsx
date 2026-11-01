@@ -10,13 +10,16 @@ import {
   ShieldCheck,
   History,
   Link2,
+  Mail,
+  Video,
+  Workflow,
 } from "lucide-react";
 import { Button } from "@/components/Button";
 import { DemoForm } from "@/components/DemoForm";
 import { HeroProductPanel } from "./HeroProductPanel";
 import { DeferredProductDemo } from "./DeferredProductDemo";
 import { StatusPill } from "./ProductWindow";
-import { demo, faq, integrations, useCases } from "./homepage-demo-data";
+import { demo, faq, integrationGroups, useCases } from "./homepage-demo-data";
 import reveal from "@/components/marketing/HeadlineReveal.module.css";
 import "./homepage.css";
 
@@ -44,18 +47,23 @@ export function TodoProof({ slot }: { slot: string }) {
   );
 }
 export function IntegrationsStrip() {
+  const icons = { email: Mail, meetings: Video, workflows: Workflow };
   return (
-    <section
-      className="cv-integrations cv-container"
-      aria-label="Supported integrations"
-    >
-      <p className="cv-eyebrow">Works with the tools your firm already uses</p>
-      <div className="cv-integration-row">
-        {integrations.map((name) => (
-          <span key={name} className="cv-integration">
-            {name}
-          </span>
-        ))}
+    <section className="cv-integrations cv-container" aria-labelledby="integrations-title">
+      <p className="cv-eyebrow">Connected to your workflow</p>
+      <h2 id="integrations-title">Your client context, <span>connected.</span></h2>
+      <div className="cv-integration-groups">
+        {integrationGroups.map(({ id, label, names }) => {
+          const Icon = icons[id];
+          return (
+            <div key={id} className="cv-integration-group">
+              <h3><Icon size={20} strokeWidth={1.6} aria-hidden="true" />{label}</h3>
+              <ul aria-label={label}>
+                {names.map((name) => <li key={name}>{name}</li>)}
+              </ul>
+            </div>
+          );
+        })}
       </div>
     </section>
   );
