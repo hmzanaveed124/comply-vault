@@ -51,6 +51,10 @@ function getCountryFromHeaders(request: NextRequest): 'GB' | null {
 }
 
 function shouldRedirectToUK(pathname: string, country: 'GB' | null, marketOverride: string | null): boolean {
+    // Shared redesigned pages stay at their canonical URLs in every region.
+    // In particular, /uk/features does not exist. Explicit /uk links remain available.
+    if (pathname === '/' || pathname === '/features') return false
+
     // Don't redirect if already on UK path
     if (pathname.startsWith('/uk/')) return false
     
