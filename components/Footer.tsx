@@ -99,7 +99,7 @@ export function Footer() {
               </span>
             </a>
             <p className="text-gray-500 dark:text-gray-400 mb-7 max-w-xs leading-relaxed">
-              Find what needs attention. Prove how it was handled. ComplyVault gives RIA compliance teams a source-linked supervisory layer across their existing systems.
+              Find what needs attention. Prove how it was handled. Source-linked meeting documentation for advisors and the teams overseeing their work.
             </p>
             
             {/* Contact Info */}
