@@ -16,12 +16,16 @@ const EXCLUDED_PATHS = [
     '/favicon.ico',
 ]
 
-// Marketing pages that can be redirected
+// Only routes with an implemented UK page may receive market redirects.
 const MARKETING_PAGES = [
     '/',
     '/pricing',
-    '/ria-compliance-software',
     '/fca-compliance-software',
+]
+
+// These pages are shared across markets; old UK-prefixed links must still work.
+const SHARED_PAGES = [
+    '/ria-compliance-software',
     '/about',
     '/contact',
     '/features',
@@ -78,6 +82,15 @@ function getUKPath(pathname: string): string {
 
 export function middleware(request: NextRequest) {
     const { pathname, searchParams } = request.nextUrl
+
+    if (pathname.startsWith('/uk/')) {
+        const sharedPath = pathname.slice('/uk'.length).replace(/\/$/, '')
+        if (SHARED_PAGES.includes(sharedPath)) {
+            const url = request.nextUrl.clone()
+            url.pathname = sharedPath
+            return NextResponse.redirect(url, 308)
+        }
+    }
 
     // www → non-www redirect is handled by Vercel Domains (Settings → Domains → set complyvault.co as primary).
     // Do NOT add redirects here or in vercel.json — Vercel already redirects www→non-www when non-www is primary.
